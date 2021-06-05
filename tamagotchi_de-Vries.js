@@ -8,17 +8,16 @@ function render() {
   scale(1);
 }
 
-//Hier fängt das Buttonsystem an. Leider kann ich die nicht in Klassen packen,
-//weil der Background zwischen der DetectionSpeicherung und der Detection liegt
-function triangledetectionButton(values) {
+//weil der Background liegt zwischen der DetectionSpeicherung und der Detection liegt
+function triangledetectionOf(values) {
   //Color-Detection-3-Eck
   noStroke();
   fill(values.r, values.g, values.b);
   triangle(values.x1, values.y1, values.x2, values.y2, values.x3, values.y3);
+
   //Farben speichern, bevor das Color-Detection-3-Eck überzeichnet wird
+  //Get speichert die Farbe der Mauszeigerposition in ein Array (rgb + alpha)
   mouseTriangledetectionEnergyButton = get(mouseX, mouseY);
-  //Get speichert die Farben der Mauszeigerposition in ein Array
-  //rgb und Alpha
 }
 
 let back = loadImage("Links/gameElements/background.png");
@@ -27,7 +26,7 @@ function backgroundImage() {
   image(back, 0, 0, back.width / 4, back.height / 4);
 }
 
-function actionButton(values) {
+function hoverOver(values) {
   if (
     mouseTriangledetectionEnergyButton[0] === values.r &&
     mouseTriangledetectionEnergyButton[1] === values.g &&
@@ -58,7 +57,7 @@ let energyButton = {
 
 function draw() {
   render();
-  triangledetectionButton(energyButton);
+  triangledetectionOf(energyButton);
   backgroundImage();
-  actionButton(energyButton);
+  hoverOver(energyButton);
 }
