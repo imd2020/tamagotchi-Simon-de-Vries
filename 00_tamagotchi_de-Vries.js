@@ -1,63 +1,116 @@
 function render() {
-  translate(550, 310);
   //Background 1100x620 Pixel (16:9)
-  // noStroke();
-  // fill(21, 17, 77);
-  // rectMode(CENTER);
-  // rect(0, 0, 1100, 620);
+  translate(550, 310);
   scale(1);
 }
 
-//weil der Background liegt zwischen der DetectionSpeicherung und der Detection liegt
-function triangledetectionOf(values) {
-  //Color-Detection-3-Eck
-  noStroke();
-  fill(values.r, values.g, values.b);
-  triangle(values.x1, values.y1, values.x2, values.y2, values.x3, values.y3);
-
-  //Farben speichern, bevor das Color-Detection-3-Eck überzeichnet wird
-  //Get speichert die Farbe der Mauszeigerposition in ein Array (rgb + alpha)
-  mouseTriangledetectionEnergyButton = get(mouseX, mouseY);
-}
-
-let back = loadImage("Links/gameElements/background.png");
-function backgroundImage() {
+let isometricRoom = loadImage("Links/gameElements/room.png");
+let statsLines = loadImage("Links/gameElements/statsLines.png");
+function isometricRoomFunc() {
   imageMode(CENTER);
-  image(back, 0, 0, back.width / 4, back.height / 4);
+  image(isometricRoom, 0, 0, isometricRoom.width / 2, isometricRoom.height / 2);
+  image(statsLines, 130, 180, statsLines.width / 2, statsLines.height / 2);
 }
 
-function hoverOver(values) {
-  if (
-    mouseTriangledetectionEnergyButton[0] === values.r &&
-    mouseTriangledetectionEnergyButton[1] === values.g &&
-    mouseTriangledetectionEnergyButton[2] === values.b &&
-    mouseTriangledetectionEnergyButton[3] === 255
-  ) {
-    noStroke();
-    fill(174, 74, 245);
-    triangle(values.x1, values.y1, values.x2, values.y2, values.x3, values.y3);
-  } else {
-    return;
-  }
-}
-
-// das alles da oben in ne Klasse packen? und dann return true/false bei hittest siehe Avataremotions
-
-let energyButton = {
-  x1: -450,
-  y1: -110,
-  x2: -350,
-  y2: -110,
-  x3: -350,
-  y3: -210,
+import button from "./01_buttons";
+let energyButtonValues = {
+  x1: -180,
+  y1: 200,
+  x2: -40,
+  y2: 200,
+  x3: -180,
+  y3: 115,
   r: 1,
   g: 2,
   b: 3,
+  buttonX1: -122,
+  buttonY1: 160,
+  buttonTypeSleeping: "energyButtonSleeping",
+  buttonTypeAwake: "energyButtonAwake",
 };
+let hackingButtonValues = {
+  x1: -180,
+  y1: -115,
+  x2: -40,
+  y2: -200,
+  x3: -180,
+  y3: -200,
+  r: 1,
+  g: 2,
+  b: 4,
+  buttonX1: -122,
+  buttonY1: -160,
+  buttonTypeSleeping: "hackingButtonSleeping",
+  buttonTypeAwake: "hackingButtonAwake",
+};
+let conditionButtonValues = {
+  x1: 180,
+  y1: -113,
+  x2: 45,
+  y2: -197,
+  x3: 180,
+  y3: -200,
+  r: 1,
+  g: 3,
+  b: 4,
+  buttonX1: 122,
+  buttonY1: -160,
+  buttonTypeSleeping: "conditionButtonSleeping",
+  buttonTypeAwake: "conditionButtonAwake",
+};
+let energyButton = new button(energyButtonValues);
+let hackingButton = new button(hackingButtonValues);
+let conditionButton = new button(conditionButtonValues);
+
+import roboLVL1 from "./02_roboLVL1";
+let roboLVL1alive = new roboLVL1(0, 33);
+
+function roboLVL1compact() {
+  push();
+  roboLVL1alive.move();
+  roboLVL1alive.earL();
+  roboLVL1alive.legL();
+  roboLVL1alive.LVL1body();
+  roboLVL1alive.face();
+  roboLVL1alive.earR();
+  roboLVL1alive.legR();
+  roboLVL1alive.legMove();
+  pop();
+}
+
+function mouseClicked() {
+  if (energyButton.hoverOver()) {
+    console.log("EnergyButton-Click!");
+  }
+  if (hackingButton.hoverOver()) {
+    console.log("HackingButton-Click!");
+  }
+  if (conditionButton.hoverOver()) {
+    console.log("ConditionButton-Click!");
+  }
+}
 
 function draw() {
   render();
-  triangledetectionOf(energyButton);
-  backgroundImage();
-  hoverOver(energyButton);
+
+  energyButton.triangledetection();
+  hackingButton.triangledetection();
+  conditionButton.triangledetection();
+
+  energyButton.backgroundImage();
+  isometricRoomFunc();
+
+  energyButton.buttonSleeps();
+  hackingButton.buttonSleeps();
+  conditionButton.buttonSleeps();
+
+  energyButton.hoverOver();
+  hackingButton.hoverOver();
+  conditionButton.hoverOver();
+
+  roboLVL1compact();
+
+  // triangledetectionOf(energyButton);
+  // backgroundImage();
+  // hoverOver(energyButton);
 }
