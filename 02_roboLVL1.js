@@ -2,13 +2,29 @@ export default class roboLVL1 {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.LVL1bodyElement = loadImage("Links/gameElements/bodyLVL1.png");
+    this.headElement = loadImage("Links/gameElements/bodyLVL1.png");
     this.faceElement = loadImage("Links/gameElements/face.png");
     this.legElement = loadImage("Links/gameElements/leg.png");
     this.earLElement = loadImage("Links/gameElements/earL.png");
     this.earRElement = loadImage("Links/gameElements/earR.png");
     this.jump = 0;
     this.jumpDirection = 2;
+
+    this.legLX = 19;
+    this.legLY = 16;
+    this.legRX = -5;
+    this.legRY = 27;
+
+    this.earLX = 18;
+    this.earLY = -25;
+    this.earRX = -27;
+    this.earRY = 8;
+
+    this.faceX = 17;
+    this.faceY = 6;
+
+    this.headX = 0;
+    this.headY = 0;
   }
   move() {
     translate(this.x, this.y + (this.jump * this.jump) / 20);
@@ -26,7 +42,7 @@ export default class roboLVL1 {
 
   legL() {
     push();
-    translate(19, 16);
+    translate(this.legLX, this.legLY);
 
     angleMode(DEGREES);
     rotate(this.jump);
@@ -46,26 +62,26 @@ export default class roboLVL1 {
     imageMode(CENTER);
     image(
       this.earLElement,
-      18,
-      -25,
+      this.earLX,
+      this.earLY,
       this.earLElement.width / 2,
       this.earLElement.height / 2
     );
   }
 
-  LVL1body() {
+  head() {
     image(
-      this.LVL1bodyElement,
-      0,
-      0,
-      this.LVL1bodyElement.width / 2,
-      this.LVL1bodyElement.height / 2
+      this.headElement,
+      this.headX,
+      this.headY,
+      this.headElement.width / 2,
+      this.headElement.height / 2
     );
   }
 
   legR() {
     push();
-    translate(-5, 27);
+    translate(this.legRX, this.legRY);
 
     angleMode(DEGREES);
     rotate(-this.jump);
@@ -85,8 +101,8 @@ export default class roboLVL1 {
   earR() {
     image(
       this.earRElement,
-      -27,
-      8,
+      this.earRX,
+      this.earRY,
       this.earRElement.width / 2,
       this.earRElement.height / 2
     );
@@ -96,8 +112,8 @@ export default class roboLVL1 {
     imageMode(CENTER);
     image(
       this.faceElement,
-      17,
-      6,
+      this.faceX,
+      this.faceY,
       this.faceElement.width / 2,
       this.faceElement.height / 2
     );

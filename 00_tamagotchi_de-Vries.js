@@ -70,11 +70,30 @@ function roboLVL1compact() {
   roboLVL1alive.move();
   roboLVL1alive.earL();
   roboLVL1alive.legL();
-  roboLVL1alive.LVL1body();
+  roboLVL1alive.head();
   roboLVL1alive.face();
   roboLVL1alive.earR();
   roboLVL1alive.legR();
   roboLVL1alive.legMove();
+  pop();
+}
+
+import roboLVL2 from "./03_roboLVL2";
+let roboLVL2alive = new roboLVL2(0, 33);
+
+function roboLVL2compact() {
+  push();
+  roboLVL2alive.move();
+  roboLVL2alive.earL();
+  roboLVL2alive.legL();
+  roboLVL2alive.armL();
+  roboLVL2alive.LVL2body();
+  roboLVL2alive.armR();
+  roboLVL2alive.head();
+  roboLVL2alive.face();
+  roboLVL2alive.earR();
+  roboLVL2alive.legR();
+  roboLVL2alive.legMove();
   pop();
 }
 
@@ -109,6 +128,7 @@ function draw() {
   conditionButton.hoverOver();
 
   roboLVL1compact();
+  // roboLVL2compact();
 
   // triangledetectionOf(energyButton);
   // backgroundImage();
