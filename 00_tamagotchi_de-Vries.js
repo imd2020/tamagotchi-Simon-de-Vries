@@ -64,7 +64,6 @@ let conditionButton = new button(conditionButtonValues);
 
 import roboLVL1 from "./02_roboLVL1";
 let roboLVL1alive = new roboLVL1(0, 33);
-
 function roboLVL1compact() {
   push();
   roboLVL1alive.move();
@@ -77,10 +76,8 @@ function roboLVL1compact() {
   roboLVL1alive.legMove();
   pop();
 }
-
 import roboLVL2 from "./03_roboLVL2";
 let roboLVL2alive = new roboLVL2(0, 33);
-
 function roboLVL2compact() {
   push();
   roboLVL2alive.move();
@@ -94,6 +91,47 @@ function roboLVL2compact() {
   roboLVL2alive.earR();
   roboLVL2alive.legR();
   roboLVL2alive.legMove();
+  pop();
+}
+import roboLVL3 from "./04_roboLVL3";
+let roboLVL3alive = new roboLVL3(0, 33);
+function roboLVL3compact() {
+  push();
+  roboLVL3alive.move();
+  roboLVL3alive.earL();
+  roboLVL3alive.legL();
+  roboLVL3alive.armL();
+  roboLVL3alive.head();
+  roboLVL3alive.head();
+  roboLVL3alive.armR();
+  roboLVL3alive.face();
+  roboLVL3alive.earR();
+  roboLVL3alive.legR();
+  roboLVL3alive.legMove();
+  roboLVL3alive.headCircle();
+  roboLVL3alive.headCircleAnimation();
+  pop();
+}
+import roboLVL4 from "./05_roboLVL4";
+let roboLVL4alive = new roboLVL4(0, 33);
+function roboLVL4compact() {
+  push();
+
+  roboLVL4alive.move();
+  roboLVL4alive.earL();
+  roboLVL4alive.legL();
+  roboLVL4alive.armL();
+  roboLVL4alive.head();
+  roboLVL4alive.head();
+  roboLVL4alive.armR();
+  roboLVL4alive.face();
+  roboLVL4alive.earR();
+  roboLVL4alive.legR();
+  roboLVL4alive.legMove();
+  roboLVL4alive.headCircle();
+  roboLVL4alive.headCircleAnimation();
+  roboLVL4alive.LVL4scalometer();
+  roboLVL4alive.LVL4scalometerAnimation();
   pop();
 }
 
@@ -127,8 +165,10 @@ function draw() {
   hackingButton.hoverOver();
   conditionButton.hoverOver();
 
-  roboLVL1compact();
+  // roboLVL1compact();
   // roboLVL2compact();
+  // roboLVL3compact();
+  roboLVL4compact();
 
   // triangledetectionOf(energyButton);
   // backgroundImage();
