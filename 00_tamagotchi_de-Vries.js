@@ -1,3 +1,6 @@
+let myFont;
+myFont = loadFont("Links/VCR_OSD_MONO_1.001.ttf");
+
 function render() {
   //Background 1100x620 Pixel (16:9)
   translate(550, 310);
@@ -135,6 +138,15 @@ function roboLVL4compact() {
   pop();
 }
 
+import energyGame from "./energyGame";
+let theEnergyGame = new energyGame();
+
+function keyReleased() {
+  theEnergyGame.fillBatteryWithKeys();
+}
+
+////-------------------------------------------------------------------
+
 function mouseClicked() {
   if (energyButton.hoverOver()) {
     console.log("EnergyButton-Click!");
@@ -150,6 +162,7 @@ function mouseClicked() {
 function draw() {
   render();
 
+  //Buttondetections
   energyButton.triangledetection();
   hackingButton.triangledetection();
   conditionButton.triangledetection();
@@ -165,12 +178,18 @@ function draw() {
   hackingButton.hoverOver();
   conditionButton.hoverOver();
 
+  //Robos
   // roboLVL1compact();
   // roboLVL2compact();
   // roboLVL3compact();
   roboLVL4compact();
 
-  // triangledetectionOf(energyButton);
-  // backgroundImage();
-  // hoverOver(energyButton);
+  //Batterygame
+  theEnergyGame.energyConsume();
+  theEnergyGame.batteryFluidEmphasis();
+  theEnergyGame.batteryDesign();
+  //"+1"
+  for (let i = 1; i < theEnergyGame.rewardEnergySigns.length; i++) {
+    theEnergyGame.rewardEnergySigns[i].rewardValues();
+  }
 }
