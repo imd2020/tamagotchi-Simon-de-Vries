@@ -75,6 +75,7 @@ scaloMeterElement = loadImage("Links/gameElements/bodyLvl4Arrow.png");
 
 scaloMeterElementX = -18;
 scaloMeterElementY = 5;
+scaloMeterSpeed = -1;
 
 function LVL4scalometer() {
   image(
@@ -86,12 +87,13 @@ function LVL4scalometer() {
   );
 }
 function LVL4scalometerAnimation() {
-  if (scaloMeterElementY === 5) {
-    scaloMeterElementY += 1;
-  }
-  if (scaloMeterElementY === 50) {
-    scaloMeterElementY -= 1;
-  }
+    scaloMeterElementY += scaloMeterSpeed;
+    if (scaloMeterElementY<-50){
+      scaloMeterSpeed = 1;
+    }
+    if (scaloMeterElementY>5){
+      scaloMeterSpeed = -1;
+    }
 }
 
 function draw() {
