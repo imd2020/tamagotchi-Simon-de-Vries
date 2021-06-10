@@ -18,7 +18,7 @@ export default class EnergyGame {
 
     this.rewardEnergySigns = [];
 
-    this.warnSign = new WarnSign();
+    this.warnSign = new WarnSign(-115, 210, "CRITICAL ENERGY");
   }
 
   energyConsume() {
@@ -106,12 +106,14 @@ export default class EnergyGame {
   fillBatteryWithKeys() {
     if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) {
       this.energyRequirement -= 0.8;
-      this.rewardEnergySigns.push(new RewardSign(-205, 200, "+1", 20, 15, 5));
+      this.rewardEnergySigns.push(new RewardSign(-200, 205, "+1", 20, 15, 5));
     }
   }
 
   warnSignEnergy() {
-    this.warnSign.warnSign();
-    this.warnSign.warnSignSpeed();
+    if (this.energyRequirement > 70) {
+      this.warnSign.warnSign();
+      this.warnSign.warnSignSpeed();
+    }
   }
 }

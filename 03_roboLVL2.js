@@ -71,9 +71,3 @@ export default class RoboLVL2 extends RoboLVL1 {
     pop();
   }
 }
-
-// export default class EmotionButton extends Button {
-//     constructor(x, y, message, emoji) {
-//       super(x, y, message, emoji, color(40, 220, 255), 0.6);
-//     }
-//   }

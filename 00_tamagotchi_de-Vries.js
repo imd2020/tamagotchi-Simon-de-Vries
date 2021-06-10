@@ -15,6 +15,103 @@ function isometricRoomFunc() {
   image(statsLines, 130, 180, statsLines.width / 2, statsLines.height / 2);
 }
 
+let levelUpXP = -17;
+function levelUpSystem() {
+  push();
+  stroke(0, 255, 255);
+  noFill();
+  rect(190, 95, 20, -187, 10);
+
+  noStroke();
+  fill(0, 255, 255);
+  //min -17, max -187, span: 170, 42,5XP to LVLUp
+  rect(190, 95, 20, levelUpXP, 10);
+
+  textFont("VCR OSD Mono");
+  text("XP", 194, -96);
+
+  textSize(10);
+  text("ROBOT ID:", 110, 170);
+
+  switch (true) {
+    case levelUpXP <= -17 && levelUpXP > -59.5:
+      //LVL1
+      textFont("VCR OSD Mono");
+      textSize(13);
+      text("LVL 1", 230, 83);
+
+      textSize(16);
+      text("WALTER", 104, 190);
+
+      fill(0, 255, 255);
+      rect(190, 78, 30, 1);
+      rect(190, 78 - 42.5, 20, 1);
+      rect(190, 78 - 42.5 - 42.5, 20, 1);
+      rect(190, 78 - 42.5 - 42.5 - 42.5, 20, 1);
+
+      roboLVL1compact();
+      break;
+
+    case levelUpXP <= -59.5 && levelUpXP > -102:
+      //LVL2
+      textFont("VCR OSD Mono");
+      textSize(13);
+      text("LVL 2", 230, 83 - 42.5);
+
+      textSize(16);
+      text("BROBOT", 103, 190);
+
+      fill(0, 255, 255);
+      rect(190, 78 - 42.5, 30, 1);
+      rect(190, 78 - 42.5 - 42.5, 20, 1);
+      rect(190, 78 - 42.5 - 42.5 - 42.5, 20, 1);
+
+      roboLVL2compact();
+      break;
+
+    case levelUpXP <= -102 && levelUpXP > -144.5:
+      //LVL3
+      textFont("VCR OSD Mono");
+      textSize(13);
+      text("LVL 3", 230, 83 - 42.5 - 42.5);
+
+      textSize(16);
+      text("FAT2-D2", 94, 190);
+
+      fill(0, 255, 255);
+      rect(190, 78 - 42.5 - 42.5, 30, 1);
+      rect(190, 78 - 42.5 - 42.5 - 42.5, 20, 1);
+
+      roboLVL3compact();
+      break;
+
+    case levelUpXP <= -144.5 && levelUpXP > -189:
+      //LVL4
+      textFont("VCR OSD Mono");
+      textSize(13);
+      text("LVL 4", 230, 83 - 42.5 - 42.5 - 42.5);
+
+      textSize(16);
+      text("ULTRON", 104, 190);
+
+      fill(0, 255, 255);
+      rect(190, 78 - 42.5 - 42.5 - 42.5, 30, 1);
+
+      roboLVL4compact();
+      break;
+
+    case levelUpXP <= -189:
+      levelUpXP = -189;
+
+      textSize(16);
+      text("ULTRON", 104, 190);
+      roboLVL4compact();
+      break;
+  }
+
+  pop();
+}
+
 import Button from "./01_Button";
 let energyButtonValues = {
   x1: -180,
@@ -79,6 +176,7 @@ function roboLVL1compact() {
   roboLVL1alive.legMove();
   pop();
 }
+
 import RoboLVL2 from "./03_RoboLVL2";
 let roboLVL2alive = new RoboLVL2(0, 33);
 function roboLVL2compact() {
@@ -141,15 +239,31 @@ function roboLVL4compact() {
 import EnergyGame from "./EnergyGame";
 let theEnergyGame = new EnergyGame();
 
+import TimerMinigames from "./TimerMinigames";
+let timerEnergyGame = new TimerMinigames(0, -248, 5);
+
+import ArrowDuringMiniGame from "./ArrowDuringGame";
+let arrowDuringMiniGame = new ArrowDuringMiniGame(-50, 195);
+
+////-------------------------------------------------------------------keyReleased
+
 function keyReleased() {
-  theEnergyGame.fillBatteryWithKeys();
+  if (
+    startTimerEnergyGame === true &&
+    timerEnergyGame.startTimeCake === true &&
+    timerEnergyGame.timeIsOver === false
+  ) {
+    theEnergyGame.fillBatteryWithKeys();
+  }
 }
 
-////-------------------------------------------------------------------
+////-------------------------------------------------------------------mouseClicked
+
+let startTimerEnergyGame = false;
 
 function mouseClicked() {
   if (energyButton.hoverOver()) {
-    console.log("EnergyButton-Click!");
+    startTimerEnergyGame = true;
   }
   if (hackingButton.hoverOver()) {
     console.log("HackingButton-Click!");
@@ -158,6 +272,8 @@ function mouseClicked() {
     console.log("ConditionButton-Click!");
   }
 }
+
+////-------------------------------------------------------------------draw
 
 function draw() {
   render();
@@ -178,19 +294,41 @@ function draw() {
   hackingButton.hoverOver();
   conditionButton.hoverOver();
 
-  //Robos
-  // roboLVL1compact();
-  // roboLVL2compact();
-  // roboLVL3compact();
-  roboLVL4compact();
-
-  //Batterygame
+  //-----------------------------------Batterygame
   theEnergyGame.energyConsume();
   theEnergyGame.batteryFluidEmphasis();
   theEnergyGame.batteryDesign();
-  //"+1"
+  theEnergyGame.warnSignEnergy();
+  //"+1" Design. functionality is by keypressed
   for (let i = 1; i < theEnergyGame.rewardEnergySigns.length; i++) {
     theEnergyGame.rewardEnergySigns[i].rewardValues();
   }
-  theEnergyGame.warnSignEnergy();
+
+  //timerMiniGamesStart Activated in mouseclicked when energybutton is pressed
+  if (startTimerEnergyGame === true) {
+    //Highlights it during the game
+    energyButton.stayOnSelectedButton();
+    //rotates during the game ("Button is Active")
+    arrowDuringMiniGame.arrowLoad();
+    //Timer
+    timerEnergyGame.timeCake();
+    timerEnergyGame.countDown();
+    timerEnergyGame.timesUp();
+
+    //starts after countdown and ends before timeOut
+    if (
+      timerEnergyGame.startTimeCake === true &&
+      timerEnergyGame.timeIsOver === false
+    ) {
+    }
+    //End of Timer and Game
+    if (timerEnergyGame.timesUpFade + timerEnergyGame.timesUpFade2 < 0) {
+      theEnergyGame.rewardEnergySigns = [];
+      timerEnergyGame.resetTimesUpVariables();
+      startTimerEnergyGame = false;
+    }
+  }
+
+  //Counts XP
+  levelUpSystem();
 }

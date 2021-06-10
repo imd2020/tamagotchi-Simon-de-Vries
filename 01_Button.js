@@ -76,4 +76,13 @@ export default class Button {
       return false;
     }
   }
+  stayOnSelectedButton() {
+    image(
+      this.buttonTypeDesignAwake,
+      this.buttonX1,
+      this.buttonY1,
+      this.buttonTypeDesignAwake.width / 2,
+      this.buttonTypeDesignAwake.height / 2
+    );
+  }
 }
