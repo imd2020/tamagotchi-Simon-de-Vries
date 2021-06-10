@@ -1,4 +1,4 @@
-export default class roboLVL2 extends roboLVL1 {
+export default class RoboLVL2 extends RoboLVL1 {
   constructor(x, y) {
     super(x, y);
     this.LVL2bodyElement = loadImage("Links/gameElements/bodyLVL2.png");

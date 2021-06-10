@@ -1,4 +1,4 @@
-export default class roboLVL3 extends roboLVL2 {
+export default class RoboLVL3 extends RoboLVL2 {
   constructor(x, y) {
     super(x, y);
 

@@ -1,4 +1,4 @@
-export default class rewardSign {
+export default class RewardSign {
   constructor(x, y, valueText, valueTextSize, tranceparencySpeed, riseUpSpeed) {
     this.x = x;
     this.y = y;

@@ -15,7 +15,7 @@ function isometricRoomFunc() {
   image(statsLines, 130, 180, statsLines.width / 2, statsLines.height / 2);
 }
 
-import button from "./01_buttons";
+import Button from "./01_Button";
 let energyButtonValues = {
   x1: -180,
   y1: 200,
@@ -61,12 +61,12 @@ let conditionButtonValues = {
   buttonTypeSleeping: "conditionButtonSleeping",
   buttonTypeAwake: "conditionButtonAwake",
 };
-let energyButton = new button(energyButtonValues);
-let hackingButton = new button(hackingButtonValues);
-let conditionButton = new button(conditionButtonValues);
+let energyButton = new Button(energyButtonValues);
+let hackingButton = new Button(hackingButtonValues);
+let conditionButton = new Button(conditionButtonValues);
 
-import roboLVL1 from "./02_roboLVL1";
-let roboLVL1alive = new roboLVL1(0, 33);
+import RoboLVL1 from "./02_RoboLVL1";
+let roboLVL1alive = new RoboLVL1(0, 33);
 function roboLVL1compact() {
   push();
   roboLVL1alive.move();
@@ -79,8 +79,8 @@ function roboLVL1compact() {
   roboLVL1alive.legMove();
   pop();
 }
-import roboLVL2 from "./03_roboLVL2";
-let roboLVL2alive = new roboLVL2(0, 33);
+import RoboLVL2 from "./03_RoboLVL2";
+let roboLVL2alive = new RoboLVL2(0, 33);
 function roboLVL2compact() {
   push();
   roboLVL2alive.move();
@@ -96,8 +96,8 @@ function roboLVL2compact() {
   roboLVL2alive.legMove();
   pop();
 }
-import roboLVL3 from "./04_roboLVL3";
-let roboLVL3alive = new roboLVL3(0, 33);
+import RoboLVL3 from "./04_RoboLVL3";
+let roboLVL3alive = new RoboLVL3(0, 33);
 function roboLVL3compact() {
   push();
   roboLVL3alive.move();
@@ -115,8 +115,8 @@ function roboLVL3compact() {
   roboLVL3alive.headCircleAnimation();
   pop();
 }
-import roboLVL4 from "./05_roboLVL4";
-let roboLVL4alive = new roboLVL4(0, 33);
+import RoboLVL4 from "./05_RoboLVL4";
+let roboLVL4alive = new RoboLVL4(0, 33);
 function roboLVL4compact() {
   push();
 
@@ -138,8 +138,8 @@ function roboLVL4compact() {
   pop();
 }
 
-import energyGame from "./energyGame";
-let theEnergyGame = new energyGame();
+import EnergyGame from "./EnergyGame";
+let theEnergyGame = new EnergyGame();
 
 function keyReleased() {
   theEnergyGame.fillBatteryWithKeys();
@@ -192,4 +192,5 @@ function draw() {
   for (let i = 1; i < theEnergyGame.rewardEnergySigns.length; i++) {
     theEnergyGame.rewardEnergySigns[i].rewardValues();
   }
+  theEnergyGame.warnSignEnergy();
 }

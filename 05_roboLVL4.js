@@ -1,6 +1,6 @@
-import roboLVL3 from "./04_roboLVL3";
+import RoboLVL3 from "./04_RoboLVL3";
 
-export default class roboLVL4 extends roboLVL3 {
+export default class RoboLVL4 extends RoboLVL3 {
   constructor(x, y) {
     super(x, y);
     this.headElement = loadImage("Links/gameElements/bodyLVL4.png");

@@ -1,6 +1,7 @@
-import rewardSign from "./rewardSign";
+import RewardSign from "./RewardSign";
+import WarnSign from "./WarnSign";
 
-export default class energyGame {
+export default class EnergyGame {
   constructor() {
     this.energyRequirement = 0;
     this.energyRequirementorGain = 0.1;
@@ -16,6 +17,8 @@ export default class energyGame {
     this.ausschnittElement = loadImage("Links/gameElements/ausschnitt.png");
 
     this.rewardEnergySigns = [];
+
+    this.warnSign = new WarnSign();
   }
 
   energyConsume() {
@@ -103,7 +106,12 @@ export default class energyGame {
   fillBatteryWithKeys() {
     if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) {
       this.energyRequirement -= 0.8;
-      this.rewardEnergySigns.push(new rewardSign(-205, 200, "+1", 20, 15, 5));
+      this.rewardEnergySigns.push(new RewardSign(-205, 200, "+1", 20, 15, 5));
     }
+  }
+
+  warnSignEnergy() {
+    this.warnSign.warnSign();
+    this.warnSign.warnSignSpeed();
   }
 }

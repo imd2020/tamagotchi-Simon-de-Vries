@@ -1,4 +1,4 @@
-export default class roboLVL1 {
+export default class RoboLVL1 {
   constructor(x, y) {
     this.x = x;
     this.y = y;
