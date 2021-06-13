@@ -56,7 +56,7 @@ export default class HackingGame {
     this.hackingErrorGIF = loadImage("Links/glitch.gif");
     this.errorCounter = 0;
 
-    this.warnSign = new WarnSign(-115, -250, "CRITICAL ENERGY");
+    this.warnSign = new WarnSign(-128, -250, "LACK OF DATA", 15);
   }
 
   randomLetterMove() {
@@ -131,10 +131,10 @@ export default class HackingGame {
     noFill();
     rect(-180, -225, 150, 15, 10);
 
-    //min 10, max 150
+    //min 0, max 150
+    noStroke();
     fill(0, 255, 255);
     rect(-180, -225, 150 - this.hackingRequirement, 15, 10);
-    noStroke();
   }
 
   hackingSystem() {

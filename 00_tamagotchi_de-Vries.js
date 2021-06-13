@@ -240,15 +240,104 @@ import EnergyGame from "./EnergyGame";
 let theEnergyGame = new EnergyGame(0.05, 0.7, 0.02);
 
 import TimerMinigames from "./TimerMinigames";
-let timerEnergyGame = new TimerMinigames(0, -248, 4);
+let timerEnergyGame = new TimerMinigames(0, -248, 3);
 
 import ArrowDuringMiniGame from "./ArrowDuringGame";
 let arrowDuringEnergyGame = new ArrowDuringMiniGame(-50, 195);
 
 import HackingGame from "./HackingGame";
 let hackingGame = new HackingGame(0.1, 10, 0.02);
-let timerHackingGame = new TimerMinigames(0, -248, 4);
+let timerHackingGame = new TimerMinigames(0, -248, 2);
 let arrowDuringHackingGame = new ArrowDuringMiniGame(-50, -195);
+
+////-------------------------------------------------------------------TEST
+let conditionRequirement = 0;
+let conditionRequirementOrGain = 0.2;
+function conditionSystem() {
+  conditionRequirement += conditionRequirementOrGain;
+
+  if (conditionRequirement > 150) {
+    conditionRequirement = 150;
+  }
+  if (conditionRequirement < 0) {
+    conditionRequirement = 0;
+  }
+}
+
+function displayConditionScala() {
+  stroke(0, 255, 255);
+  noFill();
+  rect(30, -225, 150, 15, 10);
+
+  //min 0, max 150
+  noStroke();
+  fill(0, 255, 255);
+  rect(180, -225, -150 + conditionRequirement, 15, 10);
+}
+let conditionMeterInRoom = loadImage("Links/gameElements/conditionMeter.png");
+function displayConditionMeterInRoom() {
+  image(
+    conditionMeterInRoom,
+    88,
+    -73,
+    conditionMeterInRoom.width / 2,
+    conditionMeterInRoom.height / 2
+  );
+}
+
+let conditionRandomArrow = loadImage(
+  "Links/gameElements/conditionRandomArrow.png"
+);
+
+let firstSpan = { x: 40, y: -68 };
+let secondSpan = { x: 70, y: -48 };
+let thirdSpan = { x: 100, y: -29 };
+let fourthSpan = { x: 130, y: -10 };
+
+let spans = [firstSpan, secondSpan, thirdSpan, fourthSpan];
+let randomSpan = Math.floor(random(0, 4));
+
+function displayRandomConditionArrow() {
+  image(
+    conditionRandomArrow,
+    spans[randomSpan].x,
+    spans[randomSpan].y,
+    conditionRandomArrow.width / 2,
+    conditionRandomArrow.height / 2
+  );
+}
+
+let stopArrowX = 0;
+let stopArrowXVariable = 5;
+let stopArrowY = 0;
+let stopArrowYVariable = 3.2;
+
+function stopArrowMovement() {
+  stopArrowX += stopArrowXVariable;
+  stopArrowY += stopArrowYVariable;
+
+  if (stopArrowX >= 122) {
+    stopArrowX = 122;
+    stopArrowXVariable += -5;
+    stopArrowYVariable += -3.2;
+  }
+  if (stopArrowX <= 0) {
+    stopArrowX = 0;
+    stopArrowXVariable += 5;
+    stopArrowYVariable += 3.2;
+  }
+}
+
+let stopArrow = loadImage("Links/gameElements/conditionArrow.png");
+function displayStopArrow() {
+  image(
+    stopArrow,
+    29 + stopArrowX,
+    -155 + stopArrowY,
+    stopArrow.width / 2,
+    stopArrow.height / 2
+  );
+}
 
 ////-------------------------------------------------------------------keyReleased
 
@@ -260,19 +349,25 @@ function keyReleased() {
   ) {
     theEnergyGame.fillBatteryWithKeys();
   }
-  hackingGame.compareKeyInput();
+  if (
+    startTimerHackingGame === true &&
+    timerHackingGame.startTimeCake === true &&
+    timerHackingGame.timeIsOver === false
+  ) {
+    hackingGame.compareKeyInput();
+  }
 }
 
 ////-------------------------------------------------------------------mouseClicked
 
 let startTimerEnergyGame = false;
-
+let startTimerHackingGame = false;
 function mouseClicked() {
   if (energyButton.hoverOver()) {
     startTimerEnergyGame = true;
   }
   if (hackingButton.hoverOver()) {
-    console.log("HackingButton-Click!");
+    startTimerHackingGame = true;
   }
   if (conditionButton.hoverOver()) {
     console.log("ConditionButton-Click!");
@@ -322,12 +417,6 @@ function draw() {
     timerEnergyGame.countDown();
     timerEnergyGame.timesUp();
 
-    //starts after countdown and ends before timeOut
-    if (
-      timerEnergyGame.startTimeCake === true &&
-      timerEnergyGame.timeIsOver === false
-    ) {
-    }
     //End of Timer and Game
     if (timerEnergyGame.timesUpFade + timerEnergyGame.timesUpFade2 < 0) {
       theEnergyGame.rewardEnergySigns = [];
@@ -337,18 +426,50 @@ function draw() {
   }
   ////-------------------------------------------------------------------HackingGame
   hackingGame.hackingSystem();
-  hackingGame.randomLetterMove();
-  hackingGame.generateRandomLetter();
-  hackingGame.displayRandomLetter();
-  hackingGame.showErrorMessage();
   hackingGame.displayHackingScala();
   hackingGame.warnSignHacking();
   hackingGame.gainHackingXP();
 
-  //"+1" Design. functionality is by keypressed
-  for (let i = 0; i < hackingGame.rewardHackingSigns.length; i++) {
-    hackingGame.rewardHackingSigns[i].rewardValues();
+  //timerMiniGamesStart Activated in mouseclicked when Hackerbutton is pressed
+  if (startTimerHackingGame === true) {
+    //Highlights it during the game
+    hackingButton.stayOnSelectedButton();
+    //rotates during the game ("Button is Active")
+    arrowDuringHackingGame.arrowLoad();
+    //Timer
+    timerHackingGame.timeCake();
+    timerHackingGame.countDown();
+    timerHackingGame.timesUp();
+
+    //starts after countdown and ends before timeOut
+    if (
+      timerHackingGame.startTimeCake === true &&
+      timerHackingGame.timeIsOver === false
+    ) {
+      hackingGame.randomLetterMove();
+      hackingGame.generateRandomLetter();
+      hackingGame.displayRandomLetter();
+      hackingGame.showErrorMessage();
+      //"+1" Design. functionality is by keypressed
+      for (let i = 0; i < hackingGame.rewardHackingSigns.length; i++) {
+        hackingGame.rewardHackingSigns[i].rewardValues();
+      }
+    }
+    //End of Timer and Game
+    if (timerHackingGame.timesUpFade + timerHackingGame.timesUpFade2 < 0) {
+      hackingGame.rewardHackingSigns = [];
+      timerHackingGame.resetTimesUpVariables();
+      startTimerHackingGame = false;
+    }
   }
+  ////-------------------------------------------------------------------TEST
+
+  conditionSystem();
+  displayConditionScala();
+  displayConditionMeterInRoom();
+  displayRandomConditionArrow();
+  displayStopArrow();
+  stopArrowMovement();
 
   //Counts XP
   levelUpSystem();

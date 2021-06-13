@@ -1,10 +1,11 @@
 export default class WarnSign {
-  constructor(x, y, warnText) {
+  constructor(x, y, warnText, warnTextsize) {
     this.warn = 0;
     this.warnFlash = 10;
     this.warnText = warnText;
     this.x = x;
     this.y = y;
+    this.warnTextSize = warnTextsize;
   }
 
   warnSignSpeed() {
@@ -23,7 +24,7 @@ export default class WarnSign {
     translate(this.x, this.y);
     noStroke();
     textFont("VCR OSD MONO");
-    textSize(15);
+    textSize(this.warnTextSize);
     fill(255, 51, 110, this.warn);
     text(this.warnText, 0, 15);
     pop();

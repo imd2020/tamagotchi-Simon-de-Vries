@@ -21,7 +21,7 @@ export default class EnergyGame {
 
     this.rewardEnergySigns = [];
 
-    this.warnSign = new WarnSign(-115, 210, "CRITICAL ENERGY");
+    this.warnSign = new WarnSign(-115, 210, "CRITICAL ENERGY", 15);
   }
 
   energyConsume() {
