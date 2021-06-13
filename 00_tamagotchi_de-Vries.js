@@ -237,13 +237,18 @@ function roboLVL4compact() {
 }
 
 import EnergyGame from "./EnergyGame";
-let theEnergyGame = new EnergyGame();
+let theEnergyGame = new EnergyGame(0.05, 0.7, 0.02);
 
 import TimerMinigames from "./TimerMinigames";
-let timerEnergyGame = new TimerMinigames(0, -248, 5);
+let timerEnergyGame = new TimerMinigames(0, -248, 4);
 
 import ArrowDuringMiniGame from "./ArrowDuringGame";
-let arrowDuringMiniGame = new ArrowDuringMiniGame(-50, 195);
+let arrowDuringEnergyGame = new ArrowDuringMiniGame(-50, 195);
+
+import HackingGame from "./HackingGame";
+let hackingGame = new HackingGame(0.1, 10, 0.02);
+let timerHackingGame = new TimerMinigames(0, -248, 4);
+let arrowDuringHackingGame = new ArrowDuringMiniGame(-50, -195);
 
 ////-------------------------------------------------------------------keyReleased
 
@@ -255,6 +260,7 @@ function keyReleased() {
   ) {
     theEnergyGame.fillBatteryWithKeys();
   }
+  hackingGame.compareKeyInput();
 }
 
 ////-------------------------------------------------------------------mouseClicked
@@ -299,8 +305,9 @@ function draw() {
   theEnergyGame.batteryFluidEmphasis();
   theEnergyGame.batteryDesign();
   theEnergyGame.warnSignEnergy();
+  theEnergyGame.gainEnergyXP();
   //"+1" Design. functionality is by keypressed
-  for (let i = 1; i < theEnergyGame.rewardEnergySigns.length; i++) {
+  for (let i = 0; i < theEnergyGame.rewardEnergySigns.length; i++) {
     theEnergyGame.rewardEnergySigns[i].rewardValues();
   }
 
@@ -309,7 +316,7 @@ function draw() {
     //Highlights it during the game
     energyButton.stayOnSelectedButton();
     //rotates during the game ("Button is Active")
-    arrowDuringMiniGame.arrowLoad();
+    arrowDuringEnergyGame.arrowLoad();
     //Timer
     timerEnergyGame.timeCake();
     timerEnergyGame.countDown();
@@ -327,6 +334,20 @@ function draw() {
       timerEnergyGame.resetTimesUpVariables();
       startTimerEnergyGame = false;
     }
+  }
+  ////-------------------------------------------------------------------HackingGame
+  hackingGame.hackingSystem();
+  hackingGame.randomLetterMove();
+  hackingGame.generateRandomLetter();
+  hackingGame.displayRandomLetter();
+  hackingGame.showErrorMessage();
+  hackingGame.displayHackingScala();
+  hackingGame.warnSignHacking();
+  hackingGame.gainHackingXP();
+
+  //"+1" Design. functionality is by keypressed
+  for (let i = 0; i < hackingGame.rewardHackingSigns.length; i++) {
+    hackingGame.rewardHackingSigns[i].rewardValues();
   }
 
   //Counts XP

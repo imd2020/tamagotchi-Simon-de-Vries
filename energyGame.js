@@ -2,9 +2,12 @@ import RewardSign from "./RewardSign";
 import WarnSign from "./WarnSign";
 
 export default class EnergyGame {
-  constructor() {
+  constructor(energyRequirementOrGain, gainEnergyWithKeys, gainEnergyXPamount) {
     this.energyRequirement = 0;
-    this.energyRequirementorGain = 0.1;
+
+    this.energyRequirementOrGain = energyRequirementOrGain;
+    this.gainEnergyWithKeys = gainEnergyWithKeys;
+    this.gainEnergyXPamount = gainEnergyXPamount;
 
     this.fluidTranceparency = 100;
     this.fluidTranceparencyVariable = 0;
@@ -22,7 +25,7 @@ export default class EnergyGame {
   }
 
   energyConsume() {
-    this.energyRequirement += this.energyRequirementorGain;
+    this.energyRequirement += this.energyRequirementOrGain;
 
     if (this.energyRequirement > 106) {
       this.energyRequirement = 106;
@@ -105,7 +108,7 @@ export default class EnergyGame {
 
   fillBatteryWithKeys() {
     if (keyCode === LEFT_ARROW || keyCode === RIGHT_ARROW) {
-      this.energyRequirement -= 0.8;
+      this.energyRequirement -= this.gainEnergyWithKeys;
       this.rewardEnergySigns.push(new RewardSign(-200, 205, "+1", 20, 15, 5));
     }
   }
@@ -114,6 +117,12 @@ export default class EnergyGame {
     if (this.energyRequirement > 70) {
       this.warnSign.warnSign();
       this.warnSign.warnSignSpeed();
+    }
+  }
+
+  gainEnergyXP() {
+    if (this.energyRequirement < 20) {
+      levelUpXP -= this.gainEnergyXPamount;
     }
   }
 }
