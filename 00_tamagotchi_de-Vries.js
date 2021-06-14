@@ -246,8 +246,8 @@ import ArrowDuringMiniGame from "./ArrowDuringGame";
 let arrowDuringEnergyGame = new ArrowDuringMiniGame(-50, 195);
 
 import HackingGame from "./HackingGame";
-let hackingGame = new HackingGame(0.1, 10, 0.02);
-let timerHackingGame = new TimerMinigames(0, -248, 2);
+let hackingGame = new HackingGame(0.1, 13, 0.02);
+let timerHackingGame = new TimerMinigames(0, -248, 1.5);
 let arrowDuringHackingGame = new ArrowDuringMiniGame(-50, -195);
 
 ////-------------------------------------------------------------------TEST
@@ -274,6 +274,7 @@ function displayConditionScala() {
   fill(0, 255, 255);
   rect(180, -225, -150 + conditionRequirement, 15, 10);
 }
+
 let conditionMeterInRoom = loadImage("Links/gameElements/conditionMeter.png");
 function displayConditionMeterInRoom() {
   image(
@@ -313,18 +314,20 @@ let stopArrowY = 0;
 let stopArrowYVariable = 3.2;
 
 function stopArrowMovement() {
-  stopArrowX += stopArrowXVariable;
-  stopArrowY += stopArrowYVariable;
+  if (compareArrowsNow === false) {
+    stopArrowX += stopArrowXVariable;
+    stopArrowY += stopArrowYVariable;
 
-  if (stopArrowX >= 122) {
-    stopArrowX = 122;
-    stopArrowXVariable += -5;
-    stopArrowYVariable += -3.2;
-  }
-  if (stopArrowX <= 0) {
-    stopArrowX = 0;
-    stopArrowXVariable += 5;
-    stopArrowYVariable += 3.2;
+    if (stopArrowX >= 122) {
+      stopArrowX = 122;
+      stopArrowXVariable += -5;
+      stopArrowYVariable += -3.2;
+    }
+    if (stopArrowX <= 0) {
+      stopArrowX = 0;
+      stopArrowXVariable += 5;
+      stopArrowYVariable += 3.2;
+    }
   }
 }
 
@@ -333,14 +336,93 @@ function displayStopArrow() {
   image(
     stopArrow,
     29 + stopArrowX,
-    -155 + stopArrowY,
+    -150 + stopArrowY,
     stopArrow.width / 2,
     stopArrow.height / 2
   );
 }
+let compareArrowsNow = false;
+let oldstopArrowX = 0;
+let oldstopArrowY = 0;
+let oldstopArrowXVariable = 0;
+let oldstopArrowYVariable = 0;
+let debuggingMultipleSpaceHits = true;
+function stopStopArrowWithKeys() {
+  if (debuggingMultipleSpaceHits === true) {
+    if (keyCode === 32) {
+      oldstopArrowX = stopArrowX;
+      oldstopArrowY = stopArrowY;
+      oldstopArrowXVariable = stopArrowXVariable;
+      oldstopArrowYVariable = stopArrowYVariable;
+      stopArrowXVariable = 0;
+      stopArrowYVariable = 0;
+      compareArrowsNow = true;
+      debuggingMultipleSpaceHits = false;
+    }
+  }
+}
 
+correctStopArrow = false;
+wrongStopArrow = false;
+function compareArrows() {
+  if (compareArrowsNow === true) {
+    if (randomSpan === 0 && stopArrowX < 30) {
+      correctStopArrow = true;
+    } else if (randomSpan === 1 && stopArrowX >= 30 && stopArrowX < 56) {
+      correctStopArrow = true;
+    } else if (randomSpan === 2 && stopArrowX >= 56 && stopArrowX < 86) {
+      correctStopArrow = true;
+    } else if (randomSpan === 3 && stopArrowX >= 86) {
+      correctStopArrow = true;
+    } else {
+      wrongStopArrow = true;
+    }
+  }
+}
+
+let conditionCounter = 0;
+let conditionErrorGIF = loadImage("Links/gameElements/glitchCondition.gif");
+
+function wrongOrCorrectArrow() {
+  if (correctStopArrow === true) {
+    console.log("true");
+    randomSpan = Math.floor(random(0, 4));
+    stopArrowX = oldstopArrowX;
+    stopArrowY = oldstopArrowY;
+    stopArrowXVariable = oldstopArrowXVariable;
+    stopArrowYVariable = oldstopArrowYVariable;
+
+    compareArrowsNow = false;
+    debuggingMultipleSpaceHits = true;
+    correctStopArrow = false;
+  } else if (wrongStopArrow === true) {
+    image(
+      conditionErrorGIF,
+      29 + stopArrowX,
+      -150 + stopArrowY,
+      conditionErrorGIF.width / 4.5,
+      conditionErrorGIF.height / 4.5
+    );
+
+    conditionCounter += 1;
+    if (conditionCounter > 40) {
+      conditionCounter = 0;
+
+      stopArrowX = oldstopArrowX;
+      stopArrowY = oldstopArrowY;
+      stopArrowXVariable = oldstopArrowXVariable;
+      stopArrowYVariable = oldstopArrowYVariable;
+      compareArrowsNow = false;
+      debuggingMultipleSpaceHits = true;
+      wrongStopArrow = false;
+    }
+  }
+}
 ////-------------------------------------------------------------------keyReleased
 
+function keyPressed() {
+  stopStopArrowWithKeys();
+}
 function keyReleased() {
   if (
     startTimerEnergyGame === true &&
@@ -470,6 +552,8 @@ function draw() {
   displayRandomConditionArrow();
   displayStopArrow();
   stopArrowMovement();
+  compareArrows();
+  wrongOrCorrectArrow();
 
   //Counts XP
   levelUpSystem();

@@ -53,7 +53,7 @@ export default class HackingGame {
     this.gainIntelligenceWithHacking = gainIntelligenceWithHacking;
     this.gainHackingXPamount = gainHackingXPamount;
 
-    this.hackingErrorGIF = loadImage("Links/glitch.gif");
+    this.hackingErrorGIF = loadImage("Links/gameElements/glitch.gif");
     this.errorCounter = 0;
 
     this.warnSign = new WarnSign(-128, -250, "LACK OF DATA", 15);
