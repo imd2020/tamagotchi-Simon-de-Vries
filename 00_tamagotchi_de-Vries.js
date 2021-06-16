@@ -16,6 +16,10 @@ function isometricRoomFunc() {
 }
 
 let levelUpXP = -17;
+let lvlUpGIF = loadImage("Links/gameElements/test.gif");
+let GIFcounter = 0;
+let GIFcounterTwo = 0;
+let tintFader = 255;
 function levelUpSystem() {
   push();
   stroke(0, 255, 255);
@@ -53,6 +57,22 @@ function levelUpSystem() {
       break;
 
     case levelUpXP <= -59.5 && levelUpXP > -102:
+      GIFcounter += 1;
+      if (GIFcounter < 80) {
+        push();
+        tint(255, tintFader);
+        lvlUpGIF.delay(20);
+        image(lvlUpGIF, 0, 25, lvlUpGIF.width / 1.5, lvlUpGIF.height / 1.5);
+        pop();
+      }
+      if (GIFcounter > 100) {
+        lvlUpGIF.reset();
+        tintFader = 255;
+      }
+      if (GIFcounter > 40) {
+        tintFader -= 20;
+        roboLVL2compact();
+      }
       //LVL2
       textFont("VCR OSD Mono");
       textSize(13);
@@ -66,10 +86,26 @@ function levelUpSystem() {
       rect(190, 78 - 42.5 - 42.5, 20, 1);
       rect(190, 78 - 42.5 - 42.5 - 42.5, 20, 1);
 
-      roboLVL2compact();
       break;
 
     case levelUpXP <= -102 && levelUpXP > -144.5:
+      GIFcounter = 0;
+      GIFcounterTwo += 1;
+      if (GIFcounterTwo < 80) {
+        push();
+        tint(255, tintFader);
+        image(lvlUpGIF, 0, 25, lvlUpGIF.width / 1.5, lvlUpGIF.height / 1.5);
+        pop();
+      }
+      if (GIFcounterTwo > 100) {
+        lvlUpGIF.reset();
+        tintFader = 255;
+      }
+
+      if (GIFcounterTwo > 40) {
+        tintFader -= 20;
+        roboLVL3compact();
+      }
       //LVL3
       textFont("VCR OSD Mono");
       textSize(13);
@@ -82,10 +118,25 @@ function levelUpSystem() {
       rect(190, 78 - 42.5 - 42.5, 30, 1);
       rect(190, 78 - 42.5 - 42.5 - 42.5, 20, 1);
 
-      roboLVL3compact();
       break;
 
     case levelUpXP <= -144.5 && levelUpXP > -189:
+      GIFcounterTwo = 0;
+      GIFcounter += 1;
+      if (GIFcounter < 80) {
+        push();
+        tint(255, tintFader);
+        image(lvlUpGIF, 0, 25, lvlUpGIF.width / 1.5, lvlUpGIF.height / 1.5);
+        pop();
+      }
+      if (GIFcounter > 100) {
+        lvlUpGIF.reset();
+        tintFader = 255;
+      }
+      if (GIFcounter > 40) {
+        tintFader -= 20;
+        roboLVL4compact();
+      }
       //LVL4
       textFont("VCR OSD Mono");
       textSize(13);
@@ -97,7 +148,6 @@ function levelUpSystem() {
       fill(0, 255, 255);
       rect(190, 78 - 42.5 - 42.5 - 42.5, 30, 1);
 
-      roboLVL4compact();
       break;
 
     case levelUpXP <= -189:
@@ -237,7 +287,7 @@ function roboLVL4compact() {
 }
 
 import EnergyGame from "./EnergyGame";
-let theEnergyGame = new EnergyGame(0.05, 0.7, 0.02);
+let theEnergyGame = new EnergyGame(0.04, 0.7, 0.02);
 
 import TimerMinigames from "./TimerMinigames";
 let timerEnergyGame = new TimerMinigames(0, -248, 3);
@@ -246,183 +296,26 @@ import ArrowDuringMiniGame from "./ArrowDuringGame";
 let arrowDuringEnergyGame = new ArrowDuringMiniGame(-50, 195);
 
 import HackingGame from "./HackingGame";
-let hackingGame = new HackingGame(0.1, 13, 0.02);
+let hackingGame = new HackingGame(0.09, 13, 0.02);
 let timerHackingGame = new TimerMinigames(0, -248, 1.5);
 let arrowDuringHackingGame = new ArrowDuringMiniGame(-50, -195);
 
-////-------------------------------------------------------------------TEST
-let conditionRequirement = 0;
-let conditionRequirementOrGain = 0.2;
-function conditionSystem() {
-  conditionRequirement += conditionRequirementOrGain;
-
-  if (conditionRequirement > 150) {
-    conditionRequirement = 150;
-  }
-  if (conditionRequirement < 0) {
-    conditionRequirement = 0;
-  }
-}
-
-function displayConditionScala() {
-  stroke(0, 255, 255);
-  noFill();
-  rect(30, -225, 150, 15, 10);
-
-  //min 0, max 150
-  noStroke();
-  fill(0, 255, 255);
-  rect(180, -225, -150 + conditionRequirement, 15, 10);
-}
-
-let conditionMeterInRoom = loadImage("Links/gameElements/conditionMeter.png");
-function displayConditionMeterInRoom() {
-  image(
-    conditionMeterInRoom,
-    88,
-    -73,
-    conditionMeterInRoom.width / 2,
-    conditionMeterInRoom.height / 2
-  );
-}
-
-let conditionRandomArrow = loadImage(
-  "Links/gameElements/conditionRandomArrow.png"
-);
-
-let firstSpan = { x: 40, y: -68 };
-let secondSpan = { x: 70, y: -48 };
-let thirdSpan = { x: 100, y: -29 };
-let fourthSpan = { x: 130, y: -10 };
-
-let spans = [firstSpan, secondSpan, thirdSpan, fourthSpan];
-let randomSpan = Math.floor(random(0, 4));
-
-function displayRandomConditionArrow() {
-  image(
-    conditionRandomArrow,
-    spans[randomSpan].x,
-    spans[randomSpan].y,
-    conditionRandomArrow.width / 2,
-    conditionRandomArrow.height / 2
-  );
-}
-
-let stopArrowX = 0;
-let stopArrowXVariable = 5;
-let stopArrowY = 0;
-let stopArrowYVariable = 3.2;
-
-function stopArrowMovement() {
-  if (compareArrowsNow === false) {
-    stopArrowX += stopArrowXVariable;
-    stopArrowY += stopArrowYVariable;
-
-    if (stopArrowX >= 122) {
-      stopArrowX = 122;
-      stopArrowXVariable += -5;
-      stopArrowYVariable += -3.2;
-    }
-    if (stopArrowX <= 0) {
-      stopArrowX = 0;
-      stopArrowXVariable += 5;
-      stopArrowYVariable += 3.2;
-    }
-  }
-}
-
-let stopArrow = loadImage("Links/gameElements/conditionArrow.png");
-function displayStopArrow() {
-  image(
-    stopArrow,
-    29 + stopArrowX,
-    -150 + stopArrowY,
-    stopArrow.width / 2,
-    stopArrow.height / 2
-  );
-}
-let compareArrowsNow = false;
-let oldstopArrowX = 0;
-let oldstopArrowY = 0;
-let oldstopArrowXVariable = 0;
-let oldstopArrowYVariable = 0;
-let debuggingMultipleSpaceHits = true;
-function stopStopArrowWithKeys() {
-  if (debuggingMultipleSpaceHits === true) {
-    if (keyCode === 32) {
-      oldstopArrowX = stopArrowX;
-      oldstopArrowY = stopArrowY;
-      oldstopArrowXVariable = stopArrowXVariable;
-      oldstopArrowYVariable = stopArrowYVariable;
-      stopArrowXVariable = 0;
-      stopArrowYVariable = 0;
-      compareArrowsNow = true;
-      debuggingMultipleSpaceHits = false;
-    }
-  }
-}
-
-correctStopArrow = false;
-wrongStopArrow = false;
-function compareArrows() {
-  if (compareArrowsNow === true) {
-    if (randomSpan === 0 && stopArrowX < 30) {
-      correctStopArrow = true;
-    } else if (randomSpan === 1 && stopArrowX >= 30 && stopArrowX < 56) {
-      correctStopArrow = true;
-    } else if (randomSpan === 2 && stopArrowX >= 56 && stopArrowX < 86) {
-      correctStopArrow = true;
-    } else if (randomSpan === 3 && stopArrowX >= 86) {
-      correctStopArrow = true;
-    } else {
-      wrongStopArrow = true;
-    }
-  }
-}
-
-let conditionCounter = 0;
-let conditionErrorGIF = loadImage("Links/gameElements/glitchCondition.gif");
-
-function wrongOrCorrectArrow() {
-  if (correctStopArrow === true) {
-    console.log("true");
-    randomSpan = Math.floor(random(0, 4));
-    stopArrowX = oldstopArrowX;
-    stopArrowY = oldstopArrowY;
-    stopArrowXVariable = oldstopArrowXVariable;
-    stopArrowYVariable = oldstopArrowYVariable;
-
-    compareArrowsNow = false;
-    debuggingMultipleSpaceHits = true;
-    correctStopArrow = false;
-  } else if (wrongStopArrow === true) {
-    image(
-      conditionErrorGIF,
-      29 + stopArrowX,
-      -150 + stopArrowY,
-      conditionErrorGIF.width / 4.5,
-      conditionErrorGIF.height / 4.5
-    );
-
-    conditionCounter += 1;
-    if (conditionCounter > 40) {
-      conditionCounter = 0;
-
-      stopArrowX = oldstopArrowX;
-      stopArrowY = oldstopArrowY;
-      stopArrowXVariable = oldstopArrowXVariable;
-      stopArrowYVariable = oldstopArrowYVariable;
-      compareArrowsNow = false;
-      debuggingMultipleSpaceHits = true;
-      wrongStopArrow = false;
-    }
-  }
-}
+import ConditionGame from "./ConditionGame";
+let conditionGame = new ConditionGame(0.06, 7, 0.02);
+let timerConditionGame = new TimerMinigames(0, -248, 1);
+let arrowDuringConditionGame = new ArrowDuringMiniGame(50, -195);
 ////-------------------------------------------------------------------keyReleased
 
 function keyPressed() {
-  stopStopArrowWithKeys();
+  if (
+    startTimerConditionGame === true &&
+    timerConditionGame.startTimeCake === true &&
+    timerConditionGame.timeIsOver === false
+  ) {
+    conditionGame.stopStopArrowWithKeys();
+  }
 }
+
 function keyReleased() {
   if (
     startTimerEnergyGame === true &&
@@ -444,6 +337,7 @@ function keyReleased() {
 
 let startTimerEnergyGame = false;
 let startTimerHackingGame = false;
+let startTimerConditionGame = false;
 function mouseClicked() {
   if (energyButton.hoverOver()) {
     startTimerEnergyGame = true;
@@ -452,7 +346,7 @@ function mouseClicked() {
     startTimerHackingGame = true;
   }
   if (conditionButton.hoverOver()) {
-    console.log("ConditionButton-Click!");
+    startTimerConditionGame = true;
   }
 }
 
@@ -544,16 +438,46 @@ function draw() {
       startTimerHackingGame = false;
     }
   }
-  ////-------------------------------------------------------------------TEST
+  ////-------------------------------------------------------------------ConditionGame
 
-  conditionSystem();
-  displayConditionScala();
-  displayConditionMeterInRoom();
-  displayRandomConditionArrow();
-  displayStopArrow();
-  stopArrowMovement();
-  compareArrows();
-  wrongOrCorrectArrow();
+  conditionGame.conditionSystem();
+  conditionGame.displayConditionScala();
+  conditionGame.displayConditionMeterInRoom();
+  conditionGame.warnSignCondition();
+  conditionGame.gainConditionXP();
+
+  if (startTimerConditionGame === true) {
+    //Highlights it during the game
+    conditionButton.stayOnSelectedButton();
+    //rotates during the game ("Button is Active")
+    arrowDuringConditionGame.arrowLoad();
+    //Timer
+    timerConditionGame.timeCake();
+    timerConditionGame.countDown();
+    timerConditionGame.timesUp();
+
+    //starts after countdown and ends before timeOut
+    if (
+      timerConditionGame.startTimeCake === true &&
+      timerConditionGame.timeIsOver === false
+    ) {
+      conditionGame.displayRandomConditionArrow();
+      conditionGame.displayStopArrow();
+      conditionGame.stopArrowMovement();
+      conditionGame.compareArrows();
+      conditionGame.wrongOrCorrectArrow();
+      //"+1" Design. functionality is by keypressed
+      for (let i = 0; i < conditionGame.rewardConditionSigns.length; i++) {
+        conditionGame.rewardConditionSigns[i].rewardValues();
+      }
+    }
+    //End of Timer and Game
+    if (timerConditionGame.timesUpFade + timerConditionGame.timesUpFade2 < 0) {
+      timerConditionGame.rewardConditionSigns = [];
+      timerConditionGame.resetTimesUpVariables();
+      startTimerConditionGame = false;
+    }
+  }
 
   //Counts XP
   levelUpSystem();
