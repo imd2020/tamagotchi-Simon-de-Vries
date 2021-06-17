@@ -1,5 +1,5 @@
-import RewardSign from "./RewardSign";
-import WarnSign from "./WarnSign";
+import RewardSign from "./RewardSign.js";
+import WarnSign from "./WarnSign.js";
 
 export default class EnergyGame {
   constructor(energyRequirementOrGain, gainEnergyWithKeys, gainEnergyXPamount) {
@@ -22,6 +22,8 @@ export default class EnergyGame {
     this.rewardEnergySigns = [];
 
     this.warnSign = new WarnSign(-115, 210, "CRITICAL ENERGY", 15);
+
+    this.energyGameXP = 0;
   }
 
   energyConsume() {
@@ -121,8 +123,10 @@ export default class EnergyGame {
   }
 
   gainEnergyXP() {
-    if (this.energyRequirement < 20) {
-      levelUpXP -= this.gainEnergyXPamount;
+    if (this.energyRequirement < 30) {
+      this.energyGameXP = this.gainEnergyXPamount;
+    } else {
+      this.energyGameXP = 0;
     }
   }
 }

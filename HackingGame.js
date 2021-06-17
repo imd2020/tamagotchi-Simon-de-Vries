@@ -1,5 +1,5 @@
-import RewardSign from "./RewardSign";
-import WarnSign from "./WarnSign";
+import RewardSign from "./RewardSign.js";
+import WarnSign from "./WarnSign.js";
 
 export default class HackingGame {
   constructor(
@@ -57,6 +57,8 @@ export default class HackingGame {
     this.errorCounter = 0;
 
     this.warnSign = new WarnSign(-128, -250, "LACK OF DATA", 15);
+
+    this.hackingGameXP = 0;
   }
 
   randomLetterMove() {
@@ -156,7 +158,9 @@ export default class HackingGame {
 
   gainHackingXP() {
     if (this.hackingRequirement < 30) {
-      levelUpXP -= this.gainHackingXPamount;
+      this.hackingGameXP = this.gainHackingXPamount;
+    } else {
+      this.hackingGameXP = 0;
     }
   }
 }

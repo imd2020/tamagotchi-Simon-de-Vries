@@ -1,10 +1,21 @@
-let myFont;
-myFont = loadFont("Links/VCR_OSD_MONO_1.001.ttf");
+import Button from "./01_Button.js";
+import RoboLVL1 from "./02_RoboLVL1.js";
+import RoboLVL2 from "./03_RoboLVL2.js";
+import RoboLVL3 from "./04_RoboLVL3.js";
+import RoboLVL4 from "./05_RoboLVL4.js";
+import EnergyGame from "./EnergyGame.js";
+import TimerMinigames from "./TimerMinigames.js";
+import ArrowDuringMiniGame from "./ArrowDuringGame.js";
+import HackingGame from "./HackingGame.js";
+import ConditionGame from "./ConditionGame.js";
+
+let myFont = loadFont("Links/VCR_OSD_MONO_1.001.ttf");
 
 function render() {
-  //Background 1100x620 Pixel (16:9)
-  translate(550, 310);
-  scale(1);
+  //Origin: Background 1100x620 Pixel (16:9)
+  //550, 310
+  translate(320, 350);
+  scale(1.2);
 }
 
 let isometricRoom = loadImage("Links/gameElements/room.png");
@@ -21,6 +32,11 @@ let GIFcounter = 0;
 let GIFcounterTwo = 0;
 let tintFader = 255;
 function levelUpSystem() {
+  levelUpXP -=
+    conditionGame.conditionGameXP +
+    theEnergyGame.energyGameXP +
+    hackingGame.hackingGameXP;
+
   push();
   stroke(0, 255, 255);
   noFill();
@@ -162,7 +178,6 @@ function levelUpSystem() {
   pop();
 }
 
-import Button from "./01_Button";
 let energyButtonValues = {
   x1: -180,
   y1: 200,
@@ -212,7 +227,6 @@ let energyButton = new Button(energyButtonValues);
 let hackingButton = new Button(hackingButtonValues);
 let conditionButton = new Button(conditionButtonValues);
 
-import RoboLVL1 from "./02_RoboLVL1";
 let roboLVL1alive = new RoboLVL1(0, 33);
 function roboLVL1compact() {
   push();
@@ -226,8 +240,6 @@ function roboLVL1compact() {
   roboLVL1alive.legMove();
   pop();
 }
-
-import RoboLVL2 from "./03_RoboLVL2";
 let roboLVL2alive = new RoboLVL2(0, 33);
 function roboLVL2compact() {
   push();
@@ -244,7 +256,6 @@ function roboLVL2compact() {
   roboLVL2alive.legMove();
   pop();
 }
-import RoboLVL3 from "./04_RoboLVL3";
 let roboLVL3alive = new RoboLVL3(0, 33);
 function roboLVL3compact() {
   push();
@@ -263,7 +274,6 @@ function roboLVL3compact() {
   roboLVL3alive.headCircleAnimation();
   pop();
 }
-import RoboLVL4 from "./05_RoboLVL4";
 let roboLVL4alive = new RoboLVL4(0, 33);
 function roboLVL4compact() {
   push();
@@ -286,26 +296,20 @@ function roboLVL4compact() {
   pop();
 }
 
-import EnergyGame from "./EnergyGame";
 let theEnergyGame = new EnergyGame(0.04, 0.7, 0.02);
-
-import TimerMinigames from "./TimerMinigames";
 let timerEnergyGame = new TimerMinigames(0, -248, 3);
-
-import ArrowDuringMiniGame from "./ArrowDuringGame";
 let arrowDuringEnergyGame = new ArrowDuringMiniGame(-50, 195);
 
-import HackingGame from "./HackingGame";
 let hackingGame = new HackingGame(0.09, 13, 0.02);
 let timerHackingGame = new TimerMinigames(0, -248, 1.5);
 let arrowDuringHackingGame = new ArrowDuringMiniGame(-50, -195);
 
-import ConditionGame from "./ConditionGame";
 let conditionGame = new ConditionGame(0.06, 7, 0.02);
 let timerConditionGame = new TimerMinigames(0, -248, 1);
 let arrowDuringConditionGame = new ArrowDuringMiniGame(50, -195);
 ////-------------------------------------------------------------------keyReleased
 
+window.keyPressed = keyPressed;
 function keyPressed() {
   if (
     startTimerConditionGame === true &&
@@ -316,6 +320,7 @@ function keyPressed() {
   }
 }
 
+window.keyReleased = keyReleased;
 function keyReleased() {
   if (
     startTimerEnergyGame === true &&
@@ -338,6 +343,8 @@ function keyReleased() {
 let startTimerEnergyGame = false;
 let startTimerHackingGame = false;
 let startTimerConditionGame = false;
+
+window.mouseClicked = mouseClicked;
 function mouseClicked() {
   if (energyButton.hoverOver()) {
     startTimerEnergyGame = true;
@@ -352,6 +359,7 @@ function mouseClicked() {
 
 ////-------------------------------------------------------------------draw
 
+window.draw = draw;
 function draw() {
   render();
 
@@ -360,7 +368,8 @@ function draw() {
   hackingButton.triangledetection();
   conditionButton.triangledetection();
 
-  energyButton.backgroundImage();
+  // energyButton.backgroundImage();
+  clear();
   isometricRoomFunc();
 
   energyButton.buttonSleeps();

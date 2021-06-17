@@ -1,3 +1,4 @@
+import RoboLVL2 from "./03_RoboLVL2.js";
 export default class RoboLVL3 extends RoboLVL2 {
   constructor(x, y) {
     super(x, y);

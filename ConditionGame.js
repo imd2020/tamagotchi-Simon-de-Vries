@@ -1,5 +1,5 @@
-import RewardSign from "./RewardSign";
-import WarnSign from "./WarnSign";
+import RewardSign from "./RewardSign.js";
+import WarnSign from "./WarnSign.js";
 
 export default class ConditionGame {
   constructor(
@@ -58,6 +58,7 @@ export default class ConditionGame {
     );
 
     this.rewardConditionSigns = [];
+    this.conditionGameXP = 0;
   }
 
   conditionSystem() {
@@ -216,7 +217,9 @@ export default class ConditionGame {
 
   gainConditionXP() {
     if (this.conditionRequirement < 30) {
-      levelUpXP -= this.gainConditionXPamount;
+      this.conditionGameXP = this.gainConditionXPamount;
+    } else {
+      this.conditionGameXP = 0;
     }
   }
 }
