@@ -8,6 +8,8 @@ import TimerMinigames from "./TimerMinigames.js";
 import ArrowDuringMiniGame from "./ArrowDuringGame.js";
 import HackingGame from "./HackingGame.js";
 import ConditionGame from "./ConditionGame.js";
+import Menu from "./Menu.js";
+import CountDownToMainGame from "./CountdownToMainGame.js";
 
 let myFont = loadFont("Links/VCR_OSD_MONO_1.001.ttf");
 
@@ -17,6 +19,7 @@ function render() {
   translate(320, 350);
   scale(1.2);
 }
+let menu = new Menu();
 
 let isometricRoom = loadImage("Links/gameElements/room.png");
 let statsLines = loadImage("Links/gameElements/statsLines.png");
@@ -177,6 +180,43 @@ function levelUpSystem() {
 
   pop();
 }
+function completeBackButtonDesign() {
+  push();
+  if (mouseX > 14 && mouseX < 50 && mouseY > 20 && mouseY < 60) {
+    //corner
+    rectMode(CENTER);
+    fill(110, 248, 189);
+    rect(-240, -261, 30, 30, 20);
+
+    //text
+    textAlign(CENTER);
+    fill(43, 22, 98);
+    noStroke();
+    textSize(10);
+    textFont("VCR OSD MONO");
+    text("<-", -240, -257);
+  } else {
+    //corner
+    rectMode(CENTER);
+    noFill();
+    stroke(110, 248, 189);
+    rect(-240, -261, 30, 30, 20);
+
+    //text
+    textAlign(CENTER);
+    fill(110, 248, 189);
+    noStroke();
+    textSize(10);
+    textFont("VCR OSD MONO");
+    text("<-", -240, -257);
+  }
+  pop();
+}
+function completeBackButtonClick() {
+  if (mouseX > 14 && mouseX < 50 && mouseY > 20 && mouseY < 60) {
+    return true;
+  }
+}
 
 let energyButtonValues = {
   x1: -180,
@@ -296,17 +336,19 @@ function roboLVL4compact() {
   pop();
 }
 
-let theEnergyGame = new EnergyGame(0.04, 0.7, 0.02);
+let theEnergyGame = new EnergyGame(0.03, 0.7, 0.02);
 let timerEnergyGame = new TimerMinigames(0, -248, 3);
 let arrowDuringEnergyGame = new ArrowDuringMiniGame(-50, 195);
 
-let hackingGame = new HackingGame(0.09, 13, 0.02);
+let hackingGame = new HackingGame(0.08, 13, 0.02);
 let timerHackingGame = new TimerMinigames(0, -248, 1.5);
 let arrowDuringHackingGame = new ArrowDuringMiniGame(-50, -195);
 
-let conditionGame = new ConditionGame(0.06, 7, 0.02);
+let conditionGame = new ConditionGame(0.05, 7, 0.02);
 let timerConditionGame = new TimerMinigames(0, -248, 1);
 let arrowDuringConditionGame = new ArrowDuringMiniGame(50, -195);
+
+let countDownToMainGame = new CountDownToMainGame(0, 0);
 ////-------------------------------------------------------------------keyReleased
 
 window.keyPressed = keyPressed;
@@ -343,9 +385,27 @@ function keyReleased() {
 let startTimerEnergyGame = false;
 let startTimerHackingGame = false;
 let startTimerConditionGame = false;
-
+let screen = "welcomeScreen";
 window.mouseClicked = mouseClicked;
 function mouseClicked() {
+  if (screen === "welcomeScreen") {
+    if (menu.playButtonClick()) {
+      screen = "countDownScreen";
+    }
+    if (menu.instructionButtonClick()) {
+      screen = "instructionScreen";
+    }
+  }
+  if (screen === "instructionScreen") {
+    if (menu.backToMenuButtonClick()) {
+      screen = "welcomeScreen";
+    }
+  }
+  if (screen === "gameScreen") {
+    if (completeBackButtonClick()) {
+      screen = "welcomeScreen";
+    }
+  }
   if (energyButton.hoverOver()) {
     startTimerEnergyGame = true;
   }
@@ -363,131 +423,156 @@ window.draw = draw;
 function draw() {
   render();
 
-  //Buttondetections
-  energyButton.triangledetection();
-  hackingButton.triangledetection();
-  conditionButton.triangledetection();
-
-  // energyButton.backgroundImage();
-  clear();
-  isometricRoomFunc();
-
-  energyButton.buttonSleeps();
-  hackingButton.buttonSleeps();
-  conditionButton.buttonSleeps();
-
-  energyButton.hoverOver();
-  hackingButton.hoverOver();
-  conditionButton.hoverOver();
-
-  //-----------------------------------Batterygame
-  theEnergyGame.energyConsume();
-  theEnergyGame.batteryFluidEmphasis();
-  theEnergyGame.batteryDesign();
-  theEnergyGame.warnSignEnergy();
-  theEnergyGame.gainEnergyXP();
-  //"+1" Design. functionality is by keypressed
-  for (let i = 0; i < theEnergyGame.rewardEnergySigns.length; i++) {
-    theEnergyGame.rewardEnergySigns[i].rewardValues();
+  if (screen === "welcomeScreen") {
+    menu.startScreen();
+    menu.playButtonDesign();
+    menu.instructionButtonDesign();
   }
 
-  //timerMiniGamesStart Activated in mouseclicked when energybutton is pressed
-  if (startTimerEnergyGame === true) {
-    //Highlights it during the game
-    energyButton.stayOnSelectedButton();
-    //rotates during the game ("Button is Active")
-    arrowDuringEnergyGame.arrowLoad();
-    //Timer
-    timerEnergyGame.timeCake();
-    timerEnergyGame.countDown();
-    timerEnergyGame.timesUp();
+  if (screen === "instructionScreen") {
+    menu.showInstruction();
+    menu.backToMenuButtonDesign();
+  }
 
-    //End of Timer and Game
-    if (timerEnergyGame.timesUpFade + timerEnergyGame.timesUpFade2 < 0) {
-      theEnergyGame.rewardEnergySigns = [];
-      timerEnergyGame.resetTimesUpVariables();
-      startTimerEnergyGame = false;
+  if (screen === "countDownScreen") {
+    countDownToMainGame.countDown();
+    if (countDownToMainGame.go2 < -600) {
+      screen = "gameScreen";
     }
   }
-  ////-------------------------------------------------------------------HackingGame
-  hackingGame.hackingSystem();
-  hackingGame.displayHackingScala();
-  hackingGame.warnSignHacking();
-  hackingGame.gainHackingXP();
 
-  //timerMiniGamesStart Activated in mouseclicked when Hackerbutton is pressed
-  if (startTimerHackingGame === true) {
-    //Highlights it during the game
-    hackingButton.stayOnSelectedButton();
-    //rotates during the game ("Button is Active")
-    arrowDuringHackingGame.arrowLoad();
-    //Timer
-    timerHackingGame.timeCake();
-    timerHackingGame.countDown();
-    timerHackingGame.timesUp();
+  if (screen === "gameScreen") {
+    //Buttondetections
+    energyButton.triangledetection();
+    hackingButton.triangledetection();
+    conditionButton.triangledetection();
 
-    //starts after countdown and ends before timeOut
-    if (
-      timerHackingGame.startTimeCake === true &&
-      timerHackingGame.timeIsOver === false
-    ) {
-      hackingGame.randomLetterMove();
-      hackingGame.generateRandomLetter();
-      hackingGame.displayRandomLetter();
-      hackingGame.showErrorMessage();
-      //"+1" Design. functionality is by keypressed
-      for (let i = 0; i < hackingGame.rewardHackingSigns.length; i++) {
-        hackingGame.rewardHackingSigns[i].rewardValues();
+    // energyButton.backgroundImage();
+    clear();
+    isometricRoomFunc();
+    //Go Back to menu
+    completeBackButtonDesign();
+
+    energyButton.buttonSleeps();
+    hackingButton.buttonSleeps();
+    conditionButton.buttonSleeps();
+
+    energyButton.hoverOver();
+    hackingButton.hoverOver();
+    conditionButton.hoverOver();
+
+    //-----------------------------------Batterygame
+    theEnergyGame.energyConsume();
+    theEnergyGame.batteryFluidEmphasis();
+    theEnergyGame.batteryDesign();
+    theEnergyGame.warnSignEnergy();
+    theEnergyGame.gainEnergyXP();
+    //"+1" Design. functionality is by keypressed
+    for (let i = 0; i < theEnergyGame.rewardEnergySigns.length; i++) {
+      theEnergyGame.rewardEnergySigns[i].rewardValues();
+    }
+
+    //timerMiniGamesStart Activated in mouseclicked when energybutton is pressed
+    if (startTimerEnergyGame === true) {
+      //Highlights it during the game
+      energyButton.stayOnSelectedButton();
+      //rotates during the game ("Button is Active")
+      arrowDuringEnergyGame.arrowLoad();
+      //Timer
+      timerEnergyGame.timeCake();
+      timerEnergyGame.countDown();
+      timerEnergyGame.timesUp();
+
+      //End of Timer and Game
+      if (timerEnergyGame.timesUpFade + timerEnergyGame.timesUpFade2 < 0) {
+        theEnergyGame.rewardEnergySigns = [];
+        timerEnergyGame.resetTimesUpVariables();
+        startTimerEnergyGame = false;
       }
     }
-    //End of Timer and Game
-    if (timerHackingGame.timesUpFade + timerHackingGame.timesUpFade2 < 0) {
-      hackingGame.rewardHackingSigns = [];
-      timerHackingGame.resetTimesUpVariables();
-      startTimerHackingGame = false;
-    }
-  }
-  ////-------------------------------------------------------------------ConditionGame
+    ////-------------------------------------------------------------------HackingGame
+    hackingGame.hackingSystem();
+    hackingGame.displayHackingScala();
+    hackingGame.warnSignHacking();
+    hackingGame.gainHackingXP();
 
-  conditionGame.conditionSystem();
-  conditionGame.displayConditionScala();
-  conditionGame.displayConditionMeterInRoom();
-  conditionGame.warnSignCondition();
-  conditionGame.gainConditionXP();
+    //timerMiniGamesStart Activated in mouseclicked when Hackerbutton is pressed
+    if (startTimerHackingGame === true) {
+      //Highlights it during the game
+      hackingButton.stayOnSelectedButton();
+      //rotates during the game ("Button is Active")
+      arrowDuringHackingGame.arrowLoad();
+      //Timer
+      timerHackingGame.timeCake();
+      timerHackingGame.countDown();
+      timerHackingGame.timesUp();
 
-  if (startTimerConditionGame === true) {
-    //Highlights it during the game
-    conditionButton.stayOnSelectedButton();
-    //rotates during the game ("Button is Active")
-    arrowDuringConditionGame.arrowLoad();
-    //Timer
-    timerConditionGame.timeCake();
-    timerConditionGame.countDown();
-    timerConditionGame.timesUp();
-
-    //starts after countdown and ends before timeOut
-    if (
-      timerConditionGame.startTimeCake === true &&
-      timerConditionGame.timeIsOver === false
-    ) {
-      conditionGame.displayRandomConditionArrow();
-      conditionGame.displayStopArrow();
-      conditionGame.stopArrowMovement();
-      conditionGame.compareArrows();
-      conditionGame.wrongOrCorrectArrow();
-      //"+1" Design. functionality is by keypressed
-      for (let i = 0; i < conditionGame.rewardConditionSigns.length; i++) {
-        conditionGame.rewardConditionSigns[i].rewardValues();
+      //starts after countdown and ends before timeOut
+      if (
+        timerHackingGame.startTimeCake === true &&
+        timerHackingGame.timeIsOver === false
+      ) {
+        hackingGame.randomLetterMove();
+        hackingGame.generateRandomLetter();
+        hackingGame.displayRandomLetter();
+        hackingGame.showErrorMessage();
+        //"+1" Design. functionality is by keypressed
+        for (let i = 0; i < hackingGame.rewardHackingSigns.length; i++) {
+          hackingGame.rewardHackingSigns[i].rewardValues();
+        }
+      }
+      //End of Timer and Game
+      if (timerHackingGame.timesUpFade + timerHackingGame.timesUpFade2 < 0) {
+        hackingGame.rewardHackingSigns = [];
+        timerHackingGame.resetTimesUpVariables();
+        startTimerHackingGame = false;
       }
     }
-    //End of Timer and Game
-    if (timerConditionGame.timesUpFade + timerConditionGame.timesUpFade2 < 0) {
-      timerConditionGame.rewardConditionSigns = [];
-      timerConditionGame.resetTimesUpVariables();
-      startTimerConditionGame = false;
-    }
-  }
+    ////-------------------------------------------------------------------ConditionGame
 
-  //Counts XP
-  levelUpSystem();
+    conditionGame.conditionSystem();
+    conditionGame.displayConditionScala();
+    conditionGame.displayConditionMeterInRoom();
+    conditionGame.warnSignCondition();
+    conditionGame.gainConditionXP();
+
+    if (startTimerConditionGame === true) {
+      //Highlights it during the game
+      conditionButton.stayOnSelectedButton();
+      //rotates during the game ("Button is Active")
+      arrowDuringConditionGame.arrowLoad();
+      //Timer
+      timerConditionGame.timeCake();
+      timerConditionGame.countDown();
+      timerConditionGame.timesUp();
+
+      //starts after countdown and ends before timeOut
+      if (
+        timerConditionGame.startTimeCake === true &&
+        timerConditionGame.timeIsOver === false
+      ) {
+        conditionGame.displayRandomConditionArrow();
+        conditionGame.displayStopArrow();
+        conditionGame.stopArrowMovement();
+        conditionGame.compareArrows();
+        conditionGame.wrongOrCorrectArrow();
+        //"+1" Design. functionality is by keypressed
+        for (let i = 0; i < conditionGame.rewardConditionSigns.length; i++) {
+          conditionGame.rewardConditionSigns[i].rewardValues();
+        }
+      }
+      //End of Timer and Game
+      if (
+        timerConditionGame.timesUpFade + timerConditionGame.timesUpFade2 <
+        0
+      ) {
+        timerConditionGame.rewardConditionSigns = [];
+        timerConditionGame.resetTimesUpVariables();
+        startTimerConditionGame = false;
+      }
+    }
+
+    //Counts XP
+    levelUpSystem();
+  }
 }

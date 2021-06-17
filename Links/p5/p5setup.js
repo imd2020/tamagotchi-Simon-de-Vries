@@ -1,6 +1,6 @@
 function setup() {
   //1100x620px
-  let myCanvas = createCanvas(640, 600);
+  let myCanvas = createCanvas(640, 640);
   myCanvas.parent("tamagotchi");
 
   frameRate(30);
