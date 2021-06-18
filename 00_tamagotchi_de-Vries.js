@@ -397,7 +397,7 @@ function keyReleased() {
 let startTimerEnergyGame = false;
 let startTimerHackingGame = false;
 let startTimerConditionGame = false;
-let screen = "gameScreen";
+let screen = "welcomeScreen";
 window.mouseClicked = mouseClicked;
 function mouseClicked() {
   if (screen === "welcomeScreen") {
