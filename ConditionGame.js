@@ -77,11 +77,16 @@ export default class ConditionGame {
     stroke(0, 255, 255);
     noFill();
     rect(30, -225, 150, 15, 10);
+    rect(60, -225, 120, 15, 10);
 
     //min 0, max 150
     noStroke();
     fill(0, 255, 255);
     rect(180, -225, -150 + this.conditionRequirement, 15, 10);
+
+    textSize(9);
+    textFont("VCR OSD MONO");
+    text("+XP", 38, -214);
   }
 
   displayConditionMeterInRoom() {

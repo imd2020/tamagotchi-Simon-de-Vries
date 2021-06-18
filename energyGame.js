@@ -89,6 +89,16 @@ export default class EnergyGame {
       this.waterTopElement.height / 2
     );
 
+    //XP GAIN
+    stroke(0, 255, 255);
+    line(-151, -33, -143, -33);
+
+    noStroke();
+    fill(0, 255, 255);
+    textSize(9);
+    textFont("VCR OSD MONO");
+    text("+XP", -156, -35);
+
     //Overlay Battery Fluid
     image(
       this.ausschnittElement,

@@ -397,7 +397,7 @@ function keyReleased() {
 let startTimerEnergyGame = false;
 let startTimerHackingGame = false;
 let startTimerConditionGame = false;
-let screen = "welcomeScreen";
+let screen = "gameScreen";
 window.mouseClicked = mouseClicked;
 function mouseClicked() {
   if (screen === "welcomeScreen") {
@@ -614,6 +614,7 @@ function draw() {
     //Counts XP
     levelUpSystem();
 
+    console.log(theEnergyGame.energyRequirement);
     //WIN
     if (levelUpXP <= -186) {
       winScreen.justFadeInBackground();
