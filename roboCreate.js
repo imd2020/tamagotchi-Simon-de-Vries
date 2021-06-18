@@ -1,4 +1,7 @@
 let myFont;
+import WinScreen from "./WinScreen.js";
+let winScreen = new WinScreen();
+
 myFont = loadFont("Links/VCR_OSD_MONO_1.001.ttf");
 
 function render() {
@@ -10,4 +13,5 @@ function render() {
 
 function draw() {
   render();
+  winScreen.justFadeInBackground();
 }

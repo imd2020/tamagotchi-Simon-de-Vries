@@ -3,11 +3,11 @@ import WarnSign from "./WarnSign.js";
 
 export default class EnergyGame {
   constructor(energyRequirementOrGain, gainEnergyWithKeys, gainEnergyXPamount) {
-    this.energyRequirement = 0;
-
     this.energyRequirementOrGain = energyRequirementOrGain;
     this.gainEnergyWithKeys = gainEnergyWithKeys;
     this.gainEnergyXPamount = gainEnergyXPamount;
+
+    this.energyRequirement = 0;
 
     this.fluidTranceparency = 100;
     this.fluidTranceparencyVariable = 0;
@@ -42,10 +42,10 @@ export default class EnergyGame {
     //Farbe
     this.fluidTranceparency += this.fluidTranceparencyVariable;
 
-    if (this.fluidTranceparency <= 120) {
+    if (this.fluidTranceparency <= 110) {
       this.fluidTranceparencyVariable = 1;
     }
-    if (this.fluidTranceparency >= 150) {
+    if (this.fluidTranceparency >= 160) {
       this.fluidTranceparencyVariable = -1;
     }
   }
@@ -62,7 +62,7 @@ export default class EnergyGame {
     );
 
     //Right Battery Fluid
-    //0 min, -86 max.
+    //20 min, -86 max.
     push();
     noStroke();
     rectMode(CORNERS);
@@ -71,7 +71,7 @@ export default class EnergyGame {
     pop();
 
     //Left Battery Fluid
-    //20 min., -66 max
+    //40 min., -66 max
     push();
     noStroke();
     rectMode(CORNERS);
@@ -80,7 +80,7 @@ export default class EnergyGame {
     pop();
 
     //Top Battery Fluid
-    //10 min., 76 max.
+    //30 min., 76 max.
     image(
       this.waterTopElement,
       -126.7,
@@ -116,7 +116,7 @@ export default class EnergyGame {
   }
 
   warnSignEnergy() {
-    if (this.energyRequirement > 70) {
+    if (this.energyRequirement > 80) {
       this.warnSign.warnSign();
       this.warnSign.warnSignSpeed();
     }
@@ -128,5 +128,15 @@ export default class EnergyGame {
     } else {
       this.energyGameXP = 0;
     }
+  }
+  reset() {
+    this.energyRequirement = 0;
+
+    this.fluidTranceparency = 100;
+    this.fluidTranceparencyVariable = 0;
+
+    this.rewardEnergySigns = [];
+
+    this.energyGameXP = 0;
   }
 }

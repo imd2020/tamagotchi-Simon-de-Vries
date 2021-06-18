@@ -157,10 +157,28 @@ export default class HackingGame {
   }
 
   gainHackingXP() {
-    if (this.hackingRequirement < 30) {
+    if (this.hackingRequirement < 35) {
       this.hackingGameXP = this.gainHackingXPamount;
     } else {
       this.hackingGameXP = 0;
     }
+  }
+
+  reset() {
+    this.randomLetterMovement = 0;
+    this.randomLetterMovementVariable = 0.5;
+
+    this.randomLetterFromAlphabet = 0;
+    this.newRandomLetter = true;
+
+    this.hackingError = false;
+
+    this.rewardHackingSigns = [];
+
+    this.hackingRequirement = 0;
+
+    this.errorCounter = 0;
+
+    this.hackingGameXP = 0;
   }
 }

@@ -10,6 +10,8 @@ import HackingGame from "./HackingGame.js";
 import ConditionGame from "./ConditionGame.js";
 import Menu from "./Menu.js";
 import CountDownToMainGame from "./CountdownToMainGame.js";
+import WinScreen from "./WinScreen.js";
+import LoseScreen from "./LoseScreen.js";
 
 let myFont = loadFont("Links/VCR_OSD_MONO_1.001.ttf");
 
@@ -185,7 +187,7 @@ function completeBackButtonDesign() {
   if (mouseX > 14 && mouseX < 50 && mouseY > 20 && mouseY < 60) {
     //corner
     rectMode(CENTER);
-    fill(110, 248, 189);
+    fill(223, 119, 193);
     rect(-240, -261, 30, 30, 20);
 
     //text
@@ -199,12 +201,12 @@ function completeBackButtonDesign() {
     //corner
     rectMode(CENTER);
     noFill();
-    stroke(110, 248, 189);
+    stroke(223, 119, 193);
     rect(-240, -261, 30, 30, 20);
 
     //text
     textAlign(CENTER);
-    fill(110, 248, 189);
+    fill(223, 119, 193);
     noStroke();
     textSize(10);
     textFont("VCR OSD MONO");
@@ -216,6 +218,13 @@ function completeBackButtonClick() {
   if (mouseX > 14 && mouseX < 50 && mouseY > 20 && mouseY < 60) {
     return true;
   }
+}
+
+function resetNotReallyGlobalVariables() {
+  levelUpXP = -17;
+  GIFcounter = 0;
+  GIFcounterTwo = 0;
+  tintFader = 255;
 }
 
 let energyButtonValues = {
@@ -336,19 +345,22 @@ function roboLVL4compact() {
   pop();
 }
 
-let theEnergyGame = new EnergyGame(0.03, 0.7, 0.02);
+let theEnergyGame = new EnergyGame(0.03, 0.7, 0.008);
 let timerEnergyGame = new TimerMinigames(0, -248, 3);
 let arrowDuringEnergyGame = new ArrowDuringMiniGame(-50, 195);
 
-let hackingGame = new HackingGame(0.08, 13, 0.02);
+let hackingGame = new HackingGame(0.08, 13, 0.018);
 let timerHackingGame = new TimerMinigames(0, -248, 1.5);
 let arrowDuringHackingGame = new ArrowDuringMiniGame(-50, -195);
 
-let conditionGame = new ConditionGame(0.05, 7, 0.02);
+let conditionGame = new ConditionGame(0.05, 7, 0.014);
 let timerConditionGame = new TimerMinigames(0, -248, 1);
 let arrowDuringConditionGame = new ArrowDuringMiniGame(50, -195);
 
 let countDownToMainGame = new CountDownToMainGame(0, 0);
+
+let winScreen = new WinScreen();
+let loseScreen = new LoseScreen();
 ////-------------------------------------------------------------------keyReleased
 
 window.keyPressed = keyPressed;
@@ -415,6 +427,16 @@ function mouseClicked() {
   if (conditionButton.hoverOver()) {
     startTimerConditionGame = true;
   }
+  if (screen === "winScreen") {
+    if (winScreen.backFromEndScreenButtonClick()) {
+      screen = "welcomeScreen";
+    }
+  }
+  if (screen === "loseScreen") {
+    if (loseScreen.backFromEndScreenButtonClick()) {
+      screen = "welcomeScreen";
+    }
+  }
 }
 
 ////-------------------------------------------------------------------draw
@@ -427,6 +449,23 @@ function draw() {
     menu.startScreen();
     menu.playButtonDesign();
     menu.instructionButtonDesign();
+
+    //-------------resets everything
+
+    countDownToMainGame.resetTimesUpVariables();
+    conditionGame.reset();
+    theEnergyGame.reset();
+    hackingGame.reset();
+    timerEnergyGame.reset();
+    timerConditionGame.reset();
+    timerHackingGame.reset();
+
+    resetNotReallyGlobalVariables();
+
+    //The timer doesnt run anymore when you go back to the game
+    startTimerEnergyGame = false;
+    startTimerHackingGame = false;
+    startTimerConditionGame = false;
   }
 
   if (screen === "instructionScreen") {
@@ -574,5 +613,40 @@ function draw() {
 
     //Counts XP
     levelUpSystem();
+
+    //WIN
+    if (levelUpXP <= -186) {
+      winScreen.justFadeInBackground();
+      if (winScreen.fadeInBackground >= 255) {
+        screen = "winScreen";
+      }
+    }
+
+    //LOSE
+    //a ? (b || c) : (b && c);
+    //if a is true, it must be b or c
+    //if a is false, it must be b and c
+    if (
+      theEnergyGame.energyRequirement >= 106
+        ? hackingGame.hackingRequirement >= 150 ||
+          conditionGame.conditionRequirement >= 150
+        : hackingGame.hackingRequirement >= 150 &&
+          conditionGame.conditionRequirement >= 150
+    ) {
+      loseScreen.justFadeInBackground();
+      if (loseScreen.fadeInBackground >= 255) {
+        screen = "loseScreen";
+      }
+    }
+  }
+
+  if (screen === "winScreen") {
+    winScreen.showScreen();
+    winScreen.backFromEndScreenButtonDesign();
+  }
+  //lose
+  if (screen === "loseScreen") {
+    loseScreen.showScreen();
+    loseScreen.backFromEndScreenButtonDesign();
   }
 }

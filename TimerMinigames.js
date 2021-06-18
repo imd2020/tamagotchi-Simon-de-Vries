@@ -69,7 +69,7 @@ export default class TimerMinigames {
       rotate(-90);
       fill(110, 248, 189);
       arc(0, 0, 35, 35, HALF_PI + this.timeCakeSpeed, 0);
-      stroke(21, 17, 77);
+      stroke(110, 248, 189);
       strokeWeight(3);
       noFill();
       ellipse(0, 0, 50, 50);
@@ -110,6 +110,24 @@ export default class TimerMinigames {
     this.timeCakeSpeed = 0;
     this.timesUpFade = 0;
     this.timesUpFade2 = 0;
+    this.timeIsOver = false;
+  }
+
+  reset() {
+    this.startTimeCake = false;
+    this.one = 0;
+    this.one2 = 0;
+    this.two = 0;
+    this.two2 = 0;
+    this.go = 0;
+    this.go2 = 0;
+    this.startTimeCountDown = false;
+
+    this.timeCakeSpeed = 0;
+
+    this.timesUpFade = 0;
+    this.timesUpFade2 = 0;
+
     this.timeIsOver = false;
   }
 }

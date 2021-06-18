@@ -134,7 +134,7 @@ export default class Menu {
     if (mouseX > 45 && mouseX < 120 && mouseY > 305 && mouseY < 343) {
       //corner
       rectMode(CENTER);
-      fill(110, 248, 189);
+      fill(223, 119, 193);
       rect(-200, -24, 64, 30, 20);
 
       //text
@@ -148,12 +148,12 @@ export default class Menu {
       //corner
       rectMode(CENTER);
       noFill();
-      stroke(110, 248, 189);
+      stroke(223, 119, 193);
       rect(-200, -24, 64, 30, 20);
 
       //text
       textAlign(CENTER);
-      fill(110, 248, 189);
+      fill(223, 119, 193);
       noStroke();
       textSize(10);
       textFont("VCR OSD MONO");

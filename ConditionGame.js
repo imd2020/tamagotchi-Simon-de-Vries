@@ -11,7 +11,6 @@ export default class ConditionGame {
     this.gainConditionWithKey = gainConditionWithKey;
     this.gainConditionXPamount = gainConditionXPamount;
 
-    this.conditionRequirement = 0;
     this.warnSign = new WarnSign(125, -250, "BAD CONDITION", 15);
 
     this.conditionMeterInRoom = loadImage(
@@ -34,6 +33,8 @@ export default class ConditionGame {
       this.fourthSpan,
     ];
     this.randomSpan = Math.floor(random(0, 4));
+
+    this.conditionRequirement = 0;
 
     this.stopArrowX = 0;
     this.stopArrowXVariable = 5;
@@ -209,7 +210,7 @@ export default class ConditionGame {
   }
 
   warnSignCondition() {
-    if (this.conditionRequirement > 90) {
+    if (this.conditionRequirement > 100) {
       this.warnSign.warnSign();
       this.warnSign.warnSignSpeed();
     }
@@ -221,5 +222,29 @@ export default class ConditionGame {
     } else {
       this.conditionGameXP = 0;
     }
+  }
+
+  reset() {
+    this.conditionRequirement = 0;
+
+    this.stopArrowX = 0;
+    this.stopArrowXVariable = 5;
+    this.stopArrowY = 0;
+    this.stopArrowYVariable = 3.2;
+
+    this.compareArrowsNow = false;
+    this.oldstopArrowX = 0;
+    this.oldstopArrowY = 0;
+    this.oldstopArrowXVariable = 0;
+    this.oldstopArrowYVariable = 0;
+    this.debuggingMultipleSpaceHits = true;
+
+    this.correctStopArrow = false;
+    this.wrongStopArrow = false;
+
+    this.conditionCounter = 0;
+
+    this.rewardConditionSigns = [];
+    this.conditionGameXP = 0;
   }
 }
