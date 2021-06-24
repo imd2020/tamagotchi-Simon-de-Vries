@@ -440,6 +440,7 @@ function mouseClicked() {
 }
 
 ////-------------------------------------------------------------------draw
+menu.animateButtonCorner();
 
 window.draw = draw;
 function draw() {

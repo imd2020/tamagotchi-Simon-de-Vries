@@ -6,6 +6,15 @@ export default class Menu {
     this.menuPlatform = loadImage("Links/gameElements/mainMenuPlatform.png");
     this.instruction = loadImage("Links/gameElements/instruction.png");
     this.fadeInInstructions = 0;
+
+    this.playButtonAnimatedCorner = {
+      strokeWeight: 0,
+      width: 140,
+      height: 40,
+      cornerRadius: 40,
+    };
+
+    this.strokeAnimation = 0;
   }
 
   startScreen() {
@@ -36,10 +45,38 @@ export default class Menu {
     pop();
   }
 
+  animateButtonCorner() {
+    this.strokeAnimation = gsap.to(this.playButtonAnimatedCorner, {
+      duration: 2,
+      ease: "ease",
+      strokeWeight: 4,
+      width: 150,
+      height: 50,
+      cornerRadius: 60,
+      repeat: -1,
+      yoyo: true,
+    });
+  }
+
+  displayButtonCorner() {
+    rectMode(CENTER);
+    noFill();
+    strokeWeight(this.playButtonAnimatedCorner.strokeWeight);
+    stroke(0, 255, 255);
+    rect(
+      0,
+      51,
+      this.playButtonAnimatedCorner.width,
+      this.playButtonAnimatedCorner.height,
+      this.playButtonAnimatedCorner.cornerRadius
+    );
+  }
+
   playButtonDesign() {
     push();
-
     if (mouseX > 235 && mouseX < 405 && mouseY > 390 && mouseY < 440) {
+      //Animated Corner
+      this.displayButtonCorner();
       //corner fill
       rectMode(CENTER);
       fill(0, 255, 255);
