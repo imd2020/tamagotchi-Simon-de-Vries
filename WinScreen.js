@@ -2,7 +2,7 @@ export default class WinScreen {
   constructor() {
     this.fadeInBackground = 0;
     this.fadeInScreen = 0;
-    this.endScreenGIF = loadImage("Links/gameElements/win.gif");
+    this.endScreenGIF = loadImage("./Links/gameElements/win.gif");
   }
 
   justFadeInBackground() {

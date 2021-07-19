@@ -3,8 +3,8 @@ import RoboLVL1 from "./02_RoboLVL1.js";
 export default class Menu {
   constructor() {
     this.menuRobo = new RoboLVL1(0, -114);
-    this.menuPlatform = loadImage("Links/gameElements/mainMenuPlatform.png");
-    this.instruction = loadImage("Links/gameElements/instruction.png");
+    this.menuPlatform = loadImage("./Links/gameElements/mainMenuPlatform.png");
+    this.instruction = loadImage("./Links/gameElements/instruction.png");
     this.fadeInInstructions = 0;
 
     this.playButtonAnimatedCorner = {

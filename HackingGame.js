@@ -7,15 +7,15 @@ export default class HackingGame {
     gainIntelligenceWithHacking,
     gainHackingXPamount
   ) {
-    this.a = loadImage("Links/alphabet/a.png");
-    this.s = loadImage("Links/alphabet/s.png");
-    this.d = loadImage("Links/alphabet/d.png");
-    this.f = loadImage("Links/alphabet/f.png");
-    this.g = loadImage("Links/alphabet/g.png");
-    this.h = loadImage("Links/alphabet/h.png");
-    this.j = loadImage("Links/alphabet/j.png");
-    this.k = loadImage("Links/alphabet/k.png");
-    this.l = loadImage("Links/alphabet/l.png");
+    this.a = loadImage("./Links/alphabet/a.png");
+    this.s = loadImage("./Links/alphabet/s.png");
+    this.d = loadImage("./Links/alphabet/d.png");
+    this.f = loadImage("./Links/alphabet/f.png");
+    this.g = loadImage("./Links/alphabet/g.png");
+    this.h = loadImage("./Links/alphabet/h.png");
+    this.j = loadImage("./Links/alphabet/j.png");
+    this.k = loadImage("./Links/alphabet/k.png");
+    this.l = loadImage("./Links/alphabet/l.png");
 
     this.randomLetterMovement = 0;
     this.randomLetterMovementVariable = 0.5;
@@ -53,7 +53,7 @@ export default class HackingGame {
     this.gainIntelligenceWithHacking = gainIntelligenceWithHacking;
     this.gainHackingXPamount = gainHackingXPamount;
 
-    this.hackingErrorGIF = loadImage("Links/gameElements/glitch.gif");
+    this.hackingErrorGIF = loadImage("./Links/gameElements/glitch.gif");
     this.errorCounter = 0;
 
     this.warnSign = new WarnSign(-128, -250, "LACK OF DATA", 15);

@@ -13,7 +13,7 @@ import CountDownToMainGame from "./CountdownToMainGame.js";
 import WinScreen from "./WinScreen.js";
 import LoseScreen from "./LoseScreen.js";
 
-let myFont = loadFont("Links/VCR_OSD_MONO_1.001.ttf");
+let myFont = loadFont("./Links/VCR_OSD_MONO_1.001.ttf");
 
 function render() {
   //Origin: Background 1100x620 Pixel (16:9)
@@ -23,8 +23,8 @@ function render() {
 }
 let menu = new Menu();
 
-let isometricRoom = loadImage("Links/gameElements/room.png");
-let statsLines = loadImage("Links/gameElements/statsLines.png");
+let isometricRoom = loadImage("./Links/gameElements/room.png");
+let statsLines = loadImage("./Links/gameElements/statsLines.png");
 function isometricRoomFunc() {
   imageMode(CENTER);
   image(isometricRoom, 0, 0, isometricRoom.width / 2, isometricRoom.height / 2);
@@ -32,7 +32,7 @@ function isometricRoomFunc() {
 }
 
 let levelUpXP = -17;
-let lvlUpGIF = loadImage("Links/gameElements/test.gif");
+let lvlUpGIF = loadImage("./Links/gameElements/test.gif");
 let GIFcounter = 0;
 let GIFcounterTwo = 0;
 let tintFader = 255;

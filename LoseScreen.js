@@ -3,7 +3,7 @@ import WinScreen from "./WinScreen.js";
 export default class LoseScreen extends WinScreen {
   constructor() {
     super();
-    this.endScreenGIF = loadImage("Links/gameElements/lose.gif");
+    this.endScreenGIF = loadImage("./Links/gameElements/lose.gif");
   }
 
   showScreen() {

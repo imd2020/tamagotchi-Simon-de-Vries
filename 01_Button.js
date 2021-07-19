@@ -14,16 +14,16 @@ export default class Button {
 
     this.buttonTypeSleeping = values.buttonTypeSleeping;
     this.buttonTypeDesignSleeping = loadImage(
-      "Links/gameElements/" + this.buttonTypeSleeping + ".png"
+      "./Links/gameElements/" + this.buttonTypeSleeping + ".png"
     );
 
     this.buttonTypeAwake = values.buttonTypeAwake;
     this.buttonTypeDesignAwake = loadImage(
-      "Links/gameElements/" + this.buttonTypeAwake + ".png"
+      "./Links/gameElements/" + this.buttonTypeAwake + ".png"
     );
 
     this.mouseTriangledetectionEnergyButton = 0;
-    this.back = loadImage("Links/gameElements/background.png");
+    this.back = loadImage("./Links/gameElements/background.png");
   }
 
   //weil der Background liegt zwischen der DetectionSpeicherung und der Detection liegt

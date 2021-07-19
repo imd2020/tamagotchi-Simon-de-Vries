@@ -14,11 +14,11 @@ export default class ConditionGame {
     this.warnSign = new WarnSign(125, -250, "BAD CONDITION", 15);
 
     this.conditionMeterInRoom = loadImage(
-      "Links/gameElements/conditionMeter.png"
+      "./Links/gameElements/conditionMeter.png"
     );
 
     this.conditionRandomArrow = loadImage(
-      "Links/gameElements/conditionRandomArrow.png"
+      "./Links/gameElements/conditionRandomArrow.png"
     );
 
     this.firstSpan = { x: 40, y: -68 };
@@ -41,7 +41,7 @@ export default class ConditionGame {
     this.stopArrowY = 0;
     this.stopArrowYVariable = 3.2;
 
-    this.stopArrow = loadImage("Links/gameElements/conditionArrow.png");
+    this.stopArrow = loadImage("./Links/gameElements/conditionArrow.png");
 
     this.compareArrowsNow = false;
     this.oldstopArrowX = 0;
@@ -55,7 +55,7 @@ export default class ConditionGame {
 
     this.conditionCounter = 0;
     this.conditionErrorGIF = loadImage(
-      "Links/gameElements/glitchCondition.gif"
+      "./Links/gameElements/glitchCondition.gif"
     );
 
     this.rewardConditionSigns = [];

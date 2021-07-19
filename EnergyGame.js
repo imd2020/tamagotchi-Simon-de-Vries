@@ -13,11 +13,11 @@ export default class EnergyGame {
     this.fluidTranceparencyVariable = 0;
 
     this.batteryBracketElement = loadImage(
-      "Links/gameElements/waterBracket.png"
+      "./Links/gameElements/waterBracket.png"
     );
-    this.waterBottomElement = loadImage("Links/gameElements/waterBottom.png");
-    this.waterTopElement = loadImage("Links/gameElements/waterTop.png");
-    this.ausschnittElement = loadImage("Links/gameElements/ausschnitt.png");
+    this.waterBottomElement = loadImage("./Links/gameElements/waterBottom.png");
+    this.waterTopElement = loadImage("./Links/gameElements/waterTop.png");
+    this.ausschnittElement = loadImage("./Links/gameElements/ausschnitt.png");
 
     this.rewardEnergySigns = [];
 

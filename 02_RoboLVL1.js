@@ -2,11 +2,11 @@ export default class RoboLVL1 {
   constructor(x, y) {
     this.x = x;
     this.y = y;
-    this.headElement = loadImage("Links/gameElements/bodyLVL1.png");
-    this.faceElement = loadImage("Links/gameElements/face.png");
-    this.legElement = loadImage("Links/gameElements/leg.png");
-    this.earLElement = loadImage("Links/gameElements/earL.png");
-    this.earRElement = loadImage("Links/gameElements/earR.png");
+    this.headElement = loadImage("./Links/gameElements/bodyLVL1.png");
+    this.faceElement = loadImage("./Links/gameElements/face.png");
+    this.legElement = loadImage("./Links/gameElements/leg.png");
+    this.earLElement = loadImage("./Links/gameElements/earL.png");
+    this.earRElement = loadImage("./Links/gameElements/earR.png");
     this.jump = 0;
     this.jumpDirection = 2;
 
