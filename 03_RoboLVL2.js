@@ -2,9 +2,9 @@ import RoboLVL1 from "./02_RoboLVL1.js";
 export default class RoboLVL2 extends RoboLVL1 {
   constructor(x, y) {
     super(x, y);
-    this.LVL2bodyElement = loadImage("Links/gameElements/bodyLVL2.png");
-    this.armLElement = loadImage("Links/gameElements/armL.png");
-    this.armRElement = loadImage("Links/gameElements/armR.png");
+    this.LVL2bodyElement = loadImage("./Links/gameElements/bodyLVL2.png");
+    this.armLElement = loadImage("./Links/gameElements/armL.png");
+    this.armRElement = loadImage("./Links/gameElements/armR.png");
     this.legLX = 23;
     this.legLY = 22;
     this.legRX = -7;

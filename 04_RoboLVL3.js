@@ -3,8 +3,8 @@ export default class RoboLVL3 extends RoboLVL2 {
   constructor(x, y) {
     super(x, y);
 
-    this.headElement = loadImage("Links/gameElements/bodyLVL3.png");
-    this.headCircleElement = loadImage("Links/gameElements/headCircle.png");
+    this.headElement = loadImage("./Links/gameElements/bodyLVL3.png");
+    this.headCircleElement = loadImage("./Links/gameElements/headCircle.png");
 
     this.fade = 0;
     this.fadeVariable = 0;

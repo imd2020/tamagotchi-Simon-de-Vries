@@ -1,7 +1,7 @@
 export default class ArrowDuringMiniGame {
   constructor(x, y) {
     this.arrowDuringMiniGame = loadImage(
-      "Links/gameElements/ButtonKlickedArrow.png"
+      "./Links/gameElements/ButtonKlickedArrow.png"
     );
     this.rotateArrowDuringMiniGame = 0;
     this.x = x;

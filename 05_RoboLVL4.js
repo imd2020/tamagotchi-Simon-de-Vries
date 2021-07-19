@@ -3,8 +3,8 @@ import RoboLVL3 from "./04_RoboLVL3.js";
 export default class RoboLVL4 extends RoboLVL3 {
   constructor(x, y) {
     super(x, y);
-    this.headElement = loadImage("Links/gameElements/bodyLVL4.png");
-    this.scaloMeterElement = loadImage("Links/gameElements/bodyLvl4Arrow.png");
+    this.headElement = loadImage("./Links/gameElements/bodyLVL4.png");
+    this.scaloMeterElement = loadImage("./Links/gameElements/bodyLvl4Arrow.png");
 
     this.headCircleX = 0;
     this.headCircleY = -90;
